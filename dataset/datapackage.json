@@ -1,0 +1,38 @@
+{
+  "name": "mapadosite",
+  "owner_org": "",
+  "profile": "data-package",
+  "resources": [
+    {
+      "description": "Insira a descrição/explicação detalhada deste recurso.",
+      "dialect": {
+        "delimiter": ";"
+      },
+      "encoding": "utf-8-sig",
+      "format": "csv",
+      "hashing": "md5",
+      "name": "mapadosite",
+      "path": "data/mapadosite.csv",
+      "profile": "tabular-data-resource",
+      "schema": {
+        "fields": [
+          {
+            "name": "categoria",
+            "type": "string"
+          },
+          {
+            "name": "tema",
+            "type": "string"
+          },
+          {
+            "name": "link",
+            "type": "string"
+          }
+        ]
+      },
+      "scheme": "file",
+      "title": "Insira um título humanamente legível para este recurso."
+    }
+  ],
+  "title": "Mapadosite"
+}
