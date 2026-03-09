@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa do Site - Portal da Transparência MG</title>
+    
+    <!-- ==================== ESTILOS E BIBLIOTECAS (MESMAS DO INDEX) ==================== -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bibliotecas para PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        /* ==================== VARIÁVEIS DE CORES (MESMAS DO INDEX) ==================== */
+        :root {
+            --primary-dark: #1a3a5c;
+            --primary-darker: #0f2a44;
+            --accent-red: #b93c42;
+            --accent-bright: #db233f;
+            --background-light: #f5f7fa;
+            --success-green: #28a745;
+            --warning-yellow: #ffc107;
+            --info-blue: #17a2b8;
+        }
+
+        /* ==================== ESTILOS GERAIS (MESMOS DO INDEX) ==================== */
+        body {
+            font-family: 'Montserrat', 'Open Sans', sans-serif;
+            background-color: var(--background-light);
+            padding-bottom: 15px;
+            overflow-y: hidden !important;
+            overflow-x: hidden !important;
+            min-height: auto !important;
+            height: auto !important;
+            position: relative;
+        }
+
+        html {
+            overflow-y: hidden !important;
+            height: auto !important;
+        }
+
+        .main-container, .container.dashboard-spacing, .tab-content, .table-container {
+            height: auto !important;
+            min-height: auto !important;
+            overflow: visible !important;
+            position: relative;
+        }
+
+        /* ==================== DATA ATUALIZAÇÃO (MESMO DO INDEX) ==================== */
+        .data-atualizacao-container {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .data-atualizacao-box {
+            background: white;
+            border-radius: 8px;
+            padding: 8px 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        .data-atualizacao-box i {
+            font-size: 14px;
+            color: var(--accent-red);
+        }
+
+        /* ==================== FILTROS (MESMOS DO INDEX) ==================== */
+        .filter-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--accent-red);
+        }
+        
+        .filter-label {
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 6px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .filter-label i { font-size: 18px; color: var(--accent-red); }
+        
+        .form-control, .form-select {
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            height: 42px;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent-red);
+            box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15);
+        }
+
+        /* ==================== CARDS DE MÉTRICAS (ADAPTADO) ==================== */
+        .metric-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px 15px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+            border-top: 4px solid var(--primary-dark);
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .metric-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin: 8px 0;
+            line-height: 1;
+        }
+        
+        .metric-label {
+            font-size: 15px;
+            color: var(--primary-darker);
+            font-weight: 600;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        /* ==================== CONTAINER DE GRÁFICOS (MESMO DO INDEX) ==================== */
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+            height: 100%;
+            min-height: 320px;
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--background-light);
+        }
+        
+        .chart-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin: 0;
+        }
+        
+        .chart-wrapper {
+            position: relative;
+            height: 240px;
+            width: 100%;
+        }
+
+        /* ==================== TABELAS (MESMAS DO INDEX) ==================== */
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 20px;
+            border: 1px solid #dee2e6;
+        }
+        
+        .table-header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .table-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .table-badge {
+            background: var(--accent-red);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        
+        .table-fixed-header-container {
+            position: relative;
+            max-height: 500px;
+            overflow: auto;
+        }
+        
+        .table-fixed-header-container table thead th {
+            background-color: var(--primary-dark) !important;
+            color: white !important;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            font-weight: 600;
+            padding: 12px 10px;
+            font-size: 14px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        
+        .table {
+            width: 100%;
+            font-size: 14px;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        .table tbody td {
+            padding: 12px 10px;
+            vertical-align: middle;
+            border-bottom: 1px solid #f1f1f1;
+        }
+        
+        .table tbody tr:hover {
+            background-color: rgba(41, 67, 90, 0.04);
+        }
+
+        .link-acessar {
+            color: var(--primary-dark);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .link-acessar:hover { 
+            color: var(--accent-red); 
+            text-decoration: underline;
+        }
+
+        /* ==================== BOTÕES (MESMOS DO INDEX) ==================== */
+        .btn-primary-custom, .btn-pesquisa {
+            background: linear-gradient(to right, var(--primary-darker), var(--primary-dark));
+            border: none;
+            padding: 10px 20px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            height: 42px;
+        }
+        .btn-primary-custom:hover, .btn-pesquisa:hover {
+            background: linear-gradient(to right, var(--accent-red), #a32c32);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(185, 60, 66, 0.2);
+            color: white;
+        }
+        
+        .btn-secondary-custom {
+            background: white;
+            border: 2px solid var(--primary-darker);
+            color: var(--primary-darker);
+            padding: 10px 20px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            height: 42px;
+        }
+        .btn-secondary-custom:hover {
+            background-color: var(--primary-darker);
+            color: white;
+            transform: translateY(-1px);
+        }
+        
+        .btn-export {
+            background: white;
+            border: 2px solid var(--primary-darker);
+            color: var(--primary-darker);
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            height: 38px;
+        }
+        .btn-export:hover {
+            background: var(--primary-darker);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* ==================== BOTÃO COMPARTILHAR (MESMO DO INDEX) ==================== */
+        .share-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .share-options {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            padding: 8px;
+            z-index: 1000;
+            border: 1px solid #dee2e6;
+            margin-top: 5px;
+        }
+        
+        .share-options.show { display: block; }
+        
+        .share-options a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            color: var(--primary-dark);
+            transition: background 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .share-options a:hover { background-color: var(--background-light); color: var(--accent-red); }
+        .share-options a i { font-size: 18px; width: 20px; text-align: center; }
+
+        /* ==================== NAVEGAÇÃO (MESMA DO INDEX) ==================== */
+        .nav-tabs-container {
+            background: white;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+            overflow-x: auto;
+        }
+        .nav-tabs { border: none !important; gap: 4px; flex-wrap: nowrap; }
+        .nav-tabs .nav-link {
+            border: none !important;
+            border-radius: 6px !important;
+            padding: 10px 15px !important;
+            font-weight: 600;
+            color: var(--primary-dark) !important;
+            font-size: 16px;
+            white-space: nowrap;
+            display: inline-flex !important;
+            align-items: center;
+        }
+        .nav-tabs .nav-link:hover { background-color: rgba(41, 67, 90, 0.05) !important; color: var(--accent-red) !important; }
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-darker) 100%) !important;
+            color: white !important;
+        }
+        .nav-tabs .nav-link .material-icons { font-size: 18px !important; margin-right: 8px !important; }
+
+        /* ==================== PAGINAÇÃO (MESMA DO INDEX) ==================== */
+        .pagination-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: white;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .pagination-info {
+            font-size: 13px;
+            color: #6c757d;
+        }
+        
+        .pagination .page-link {
+            color: var(--primary-dark);
+            border-color: #dee2e6;
+        }
+        .pagination .page-link:hover {
+            color: var(--accent-red);
+            background-color: #f8f9fa;
+            border-color: #dee2e6;
+        }
+        .pagination .page-item.active .page-link {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+            color: white;
+        }
+        
+        .items-per-page {
+            width: 70px;
+            border: 2px solid var(--primary-dark) !important;
+            border-radius: 6px;
+            padding: 5px 10px;
+            font-size: 12px;
+            background-color: white;
+            color: var(--primary-dark);
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .search-box {
+            border: 2px solid var(--primary-dark) !important;
+            border-radius: 6px !important;
+            padding: 8px 12px !important;
+            font-size: 13px !important;
+            width: 250px !important;
+            background-color: white;
+            color: var(--primary-dark);
+        }
+        .search-box:focus {
+            border-color: var(--accent-red) !important;
+            box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15);
+            outline: none;
+        }
+
+        /* ==================== METADADOS (MESMO DO INDEX) ==================== */
+        .metadata-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid var(--info-blue);
+        }
+        .metadata-item { font-size: 13px; padding: 8px 0; border-bottom: 1px dashed #eee; }
+        .metadata-item strong { color: var(--primary-dark); width: 180px; display: inline-block; }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="container dashboard-spacing">
+            <!-- ==================== MENU DE NAVEGAÇÃO (MESMO DO INDEX) ==================== -->
+            <div class="nav-tabs-container">
+                <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+                    <li class="nav-item"><button class="nav-link active" id="visao-geral-tab" data-bs-toggle="tab" data-bs-target="#visao-geral"><i class="material-icons">explore</i>Mapa do Site</button></li>
+                    <li class="nav-item"><button class="nav-link" id="consulta-tab" data-bs-toggle="tab" data-bs-target="#consulta"><i class="material-icons">search</i>Consulta por Categoria</button></li>
+                    <li class="nav-item"><button class="nav-link" id="downloads-tab" data-bs-toggle="tab" data-bs-target="#downloads"><i class="material-icons">download</i>Downloads</button></li>
+                </ul>
+            </div>
+
+            <!-- ==================== DATA DE ATUALIZAÇÃO (MESMO DO INDEX) ==================== -->
+            <div class="data-atualizacao-container">
+                <div class="data-atualizacao-box">
+                    <i class="material-icons">update</i> Atualizado em: <span id="data-atualizacao-header">Carregando...</span>
+                </div>
+            </div>
+
+            <!-- ==================== CONTEÚDO DAS ABAS ==================== -->
+            <div class="tab-content" id="dashboardTabsContent">
+                <!-- ABA 1: VISÃO GERAL (MAPA DO SITE) -->
+                <div class="tab-pane fade show active" id="visao-geral" role="tabpanel">
+                    <div id="visao-geral-content"></div>
+                </div>
+                <!-- ABA 2: CONSULTA POR CATEGORIA -->
+                <div class="tab-pane fade" id="consulta" role="tabpanel">
+                    <div id="consulta-content"></div>
+                </div>
+                <!-- ABA 3: DOWNLOADS -->
+                <div class="tab-pane fade" id="downloads" role="tabpanel">
+                    <div id="downloads-content"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== LOADING OVERLAY (MESMO DO INDEX) ==================== -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.9); z-index:9999; justify-content:center; align-items:center;">
+        <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Carregando...</span></div>
+    </div>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ============================================
+        // CONFIGURAÇÕES E VARIÁVEIS GLOBAIS
+        // ============================================
+        const GITHUB_CSV_URL = 'https://raw.githubusercontent.com/transparencia-mg/mapadosite/main/dataset/data/mapadosite.csv';
+        let dadosCompletos = [];
+        let dadosFiltrados = [];
+        let metricaGeral = {};
+
+        // Variáveis de paginação para Consulta Individual
+        let paginaAtualCI = 1;
+        let itensPorPaginaCI = 50;
+        let totalPaginasCI = 1;
+        let todosLinks = [];
+        let linksFiltrados = [];
+
+        const chartPalette = ['#1a3a5c','#2c5f8a','#3a7cb8','#5a9fd4','#7ab8e0','#9dd1ec','#bde4f5','#d4a017','#c0392b','#27ae60'];
+
+        // ============================================
+        // FUNÇÕES DE INICIALIZAÇÃO (MESMAS DO INDEX)
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            carregarDados();
+            setupAtualizacaoData();
+            removeAllScrollIssues();
+            console.log('Dashboard do Mapa do Site carregado!');
+        });
+
+        function removeAllScrollIssues() { /* ... (mesma função do index) ... */ 
+            const elements = [document.body, document.documentElement, document.querySelector('.main-container'), document.querySelector('.container.dashboard-spacing'), document.querySelector('.tab-content'), ...document.querySelectorAll('.tab-pane'), ...document.querySelectorAll('.table-container'), ...document.querySelectorAll('.row'), ...document.querySelectorAll('.col'), ...document.querySelectorAll('.container'), ...document.querySelectorAll('.container-fluid')];
+            elements.forEach(el => { if (el && el.style) { el.style.overflowY = 'visible'; el.style.overflowX = 'visible'; el.style.overflow = 'visible'; } });
+            document.body.classList.remove('overflow-auto'); document.documentElement.classList.remove('overflow-auto'); document.documentElement.style.height = 'auto'; document.body.style.height = 'auto';
+        }
+
+        function iframeUpdateHeight() { /* ... (mesma função do index) ... */ 
+            document.body.style.display = 'none'; document.body.offsetHeight; document.body.style.display = '';
+            const html = document.documentElement; const body = document.body; const scrollHeight = Math.max( body.scrollHeight, html.scrollHeight, body.offsetHeight, html.offsetHeight );
+            const finalHeight = scrollHeight + 10;
+            try { window.parent.postMessage({ iframeHeight: finalHeight }, '*'); } catch (error) { }
+            return finalHeight;
+        }
+
+        function setupAtualizacaoData() {
+            const now = new Date();
+            const dataFormatada = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR');
+            const elementoData = document.getElementById('data-atualizacao-header');
+            if (elementoData) { elementoData.textContent = dataFormatada; }
+        }
+
+        function setupEventListeners() {
+            window.addEventListener('click', (e) => {
+                if (!e.target.closest('.share-dropdown')) {
+                    document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show'));
+                }
+            });
+        }
+
+        function mostrarLoading(show) {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) { overlay.style.display = show ? 'flex' : 'none'; }
+        }
+
+        function showError(message) {
+            const container = document.querySelector('.main-container');
+            if (!container) return;
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'alert alert-danger alert-dismissible fade show';
+            errorDiv.innerHTML = `<i class="material-icons me-2" style="vertical-align: middle;">warning</i> ${message} <button type="button" class="btn-close" data-bs-dismiss="alert"></button>`;
+            container.prepend(errorDiv);
+            setTimeout(() => { errorDiv.remove(); }, 5000);
+        }
+
+        // ============================================
+        // FUNÇÕES AUXILIARES
+        // ============================================
+        function parseCSV(texto) {
+            const linhas = texto.trim().split('\n');
+            const cabecalhos = linhas[0].split(';').map(h => h.trim().replace(/^\uFEFF/, '')); // Remove BOM
+            const dados = [];
+            for (let i = 1; i < linhas.length; i++) {
+                if (!linhas[i].trim()) continue;
+                const valores = linhas[i].split(';');
+                const linha = {};
+                cabecalhos.forEach((cab, idx) => {
+                    linha[cab] = valores[idx]?.trim() || '';
+                });
+                dados.push(linha);
+            }
+            return dados;
+        }
+
+        function obterOpcoesFiltro() {
+            const categorias = [...new Set(dadosCompletos.map(i => i.categoria))].filter(Boolean).sort();
+            const temas = [...new Set(dadosCompletos.map(i => i.tema))].filter(Boolean).sort();
+            return { categorias, temas };
+        }
+
+        function agruparPorCategoria(dados) {
+            const mapa = new Map();
+            for (const i of dados) {
+                if (!mapa.has(i.categoria)) {
+                    mapa.set(i.categoria, { categoria: i.categoria, total: 0, links: [] });
+                }
+                const o = mapa.get(i.categoria);
+                o.total += 1;
+                o.links.push(i);
+            }
+            return Array.from(mapa.values()).sort((a,b) => b.total - a.total);
+        }
+
+        // ============================================
+        // CARREGAMENTO DE DADOS
+        // ============================================
+        async function carregarDados() {
+            mostrarLoading(true);
+            try {
+                const resposta = await fetch(GITHUB_CSV_URL);
+                const texto = await resposta.text();
+                dadosCompletos = parseCSV(texto);
+                dadosFiltrados = [...dadosCompletos];
+                metricaGeral = {
+                    totalLinks: dadosCompletos.length,
+                    totalCategorias: new Set(dadosCompletos.map(i => i.categoria)).size,
+                };
+                todosLinks = [...dadosCompletos];
+                linksFiltrados = [...todosLinks];
+                
+                renderizarVisaoGeral();
+                renderizarConsulta();
+                renderizarDownloads();
+                
+                setTimeout(iframeUpdateHeight, 500);
+            } catch (erro) {
+                console.error('Erro:', erro);
+                showError('Erro ao carregar dados. Tente novamente mais tarde.');
+            } finally { mostrarLoading(false); }
+        }
+
+        // ============================================
+        // RENDERIZAÇÃO VISÃO GERAL (MAPA DO SITE)
+        // ============================================
+        function renderizarVisaoGeral() {
+            const container = document.getElementById('visao-geral-content');
+            const dadosCat = agruparPorCategoria(dadosFiltrados);
+            
+            let html = `
+                <!-- Cards de Métricas -->
+                <div class="row mb-4">
+                    <div class="col-md-6"><div class="metric-card"><div class="metric-label">Total de Links</div><div class="metric-value">${metricaGeral.totalLinks.toLocaleString('pt-BR')}</div></div></div>
+                    <div class="col-md-6"><div class="metric-card"><div class="metric-label">Categorias</div><div class="metric-value">${metricaGeral.totalCategorias.toLocaleString('pt-BR')}</div></div></div>
+                </div>
+
+                <!-- Gráfico Criativo: Mapa de Árvore (Treemap) - Simulado com Barras -->
+                <div class="row mb-4">
+                    <div class="col-md-12"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Distribuição de Links por Categoria</h4></div><div class="chart-wrapper"><canvas id="chartCategorias"></canvas></div></div></div>
+                </div>
+
+                <!-- Botões de Ação -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex gap-2">
+                        <button class="btn-export" onclick="exportarTabelaVisaoGeralCSV()"><i class="material-icons me-2">description</i>CSV</button>
+                        <button class="btn-export" onclick="exportarTabelaVisaoGeralPDF()"><i class="material-icons me-2">print</i>PDF</button>
+                        <div class="share-dropdown">
+                            <button class="btn-export" onclick="toggleShare(1)"><i class="material-icons me-2">share</i>Compartilhar</button>
+                            <div class="share-options" id="shareOptions1">
+                                <a href="#" onclick="copiarLink(event,1)"><i class="fas fa-link"></i> Copiar Link</a>
+                                <a href="#" onclick="compartilharFacebook(event,1)"><i class="fab fa-facebook-f"></i> Facebook</a>
+                                <a href="#" onclick="compartilharTwitter(event,1)"><i class="fab fa-twitter"></i> Twitter</a>
+                                <a href="#" onclick="compartilharLinkedIn(event,1)"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                                <a href="#" onclick="compartilharWhatsApp(event,1)"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="table-badge" id="totalCategoriasBadge">${dadosCat.length} categorias</span>
+                </div>
+
+                <!-- Tabela de Categorias -->
+                <div class="table-container">
+                    <div class="table-fixed-header-container">
+                        <table class="table" id="categoriasTable">
+                            <thead><tr><th>Categoria</th><th class="text-center">Quantidade de Links</th></tr></thead>
+                            <tbody id="categoriasTableBody">${gerarLinhasTabelaCategorias(dadosCat)}</tbody>
+                            <tfoot><tr><td class="fw-bold">Total Geral</td><td class="text-center fw-bold">${dadosCat.reduce((a,i)=>a+i.total,0).toLocaleString()}</td></tr></tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Detalhamento dos Links (Opcional) -->
+                <div class="mt-4">
+                    <h5 class="fw-bold" style="color: var(--primary-dark);">Todos os Links</h5>
+                </div>
+                <div class="table-container">
+                    <div class="table-fixed-header-container">
+                        <table class="table" id="linksTable">
+                            <thead><tr><th>Categoria</th><th>Tema</th><th>Link</th></tr></thead>
+                            <tbody id="linksTableBody">${gerarLinhasTabelaLinks(dadosFiltrados.slice(0, 50))}</tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+            criarGraficoCategorias(agruparPorCategoria(dadosFiltrados));
+            setTimeout(iframeUpdateHeight, 300);
+        }
+
+        function gerarLinhasTabelaCategorias(dados) {
+            return dados.map(item => `
+                <tr>
+                    <td><strong>${item.categoria}</strong></td>
+                    <td class="text-center">${item.total.toLocaleString()}</td>
+                </tr>
+            `).join('');
+        }
+
+        function gerarLinhasTabelaLinks(dados) {
+            return dados.map(item => `
+                <tr>
+                    <td>${item.categoria}</td>
+                    <td>${item.tema}</td>
+                    <td><a href="${item.link}" target="_blank" class="link-acessar">Acessar <i class="material-icons" style="font-size: 14px; vertical-align: middle;">launch</i></a></td>
+                </tr>
+            `).join('');
+        }
+
+        function criarGraficoCategorias(dados) {
+            const ctx = document.getElementById('chartCategorias')?.getContext('2d');
+            if (!ctx) return;
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: dados.map(i => i.categoria),
+                    datasets: [{
+                        label: 'Número de Links',
+                        data: dados.map(i => i.total),
+                        backgroundColor: chartPalette,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                    },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { stepSize: 1 } }
+                    }
+                }
+            });
+        }
+
+        // ============================================
+        // RENDERIZAÇÃO CONSULTA INDIVIDUAL
+        // ============================================
+        function renderizarConsulta() {
+            const opcoes = obterOpcoesFiltro();
+            todosLinks = [...dadosCompletos];
+            linksFiltrados = [...todosLinks];
+            
+            const container = document.getElementById('consulta-content');
+            container.innerHTML = `
+                <!-- Filtros -->
+                <div class="filter-container">
+                    <div class="row g-3">
+                        <div class="col-md-5">
+                            <label class="filter-label"><i class="material-icons">category</i>Categoria</label>
+                            <select class="form-select" id="filtroCategoriaCI">
+                                <option value="">Todas</option>
+                                ${opcoes.categorias.map(c => `<option value="${c}">${c}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="filter-label"><i class="material-icons">topic</i>Tema</label>
+                            <select class="form-select" id="filtroTemaCI">
+                                <option value="">Todos</option>
+                                ${opcoes.temas.map(t => `<option value="${t}">${t}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button class="btn-pesquisa w-100" onclick="aplicarFiltrosCI()"><i class="material-icons me-2">search</i>Pesquisar</button>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <input type="text" class="search-box" id="buscaTemaCI" placeholder="Buscar por tema..." onkeyup="aplicarFiltrosCI()">
+                        </div>
+                        <div class="col-md-6 d-flex justify-content-end gap-2">
+                            <button class="btn-secondary-custom" onclick="limparFiltrosCI()"><i class="material-icons me-2">clear</i>Limpar Filtros</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex gap-2">
+                        <button class="btn-export" onclick="exportarTabelaConsultaCSV()"><i class="material-icons me-2">description</i>CSV</button>
+                        <button class="btn-export" onclick="exportarTabelaConsultaPDF()"><i class="material-icons me-2">print</i>PDF</button>
+                        <div class="share-dropdown">
+                            <button class="btn-export" onclick="toggleShare(2)"><i class="material-icons me-2">share</i>Compartilhar</button>
+                            <div class="share-options" id="shareOptions2">
+                                <a href="#" onclick="copiarLink(event,2)"><i class="fas fa-link"></i> Copiar Link</a>
+                                <a href="#" onclick="compartilharFacebook(event,2)"><i class="fab fa-facebook-f"></i> Facebook</a>
+                                <a href="#" onclick="compartilharTwitter(event,2)"><i class="fab fa-twitter"></i> Twitter</a>
+                                <a href="#" onclick="compartilharLinkedIn(event,2)"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                                <a href="#" onclick="compartilharWhatsApp(event,2)"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="table-badge" id="totalLinksBadge">${todosLinks.length} links</span>
+                        <select class="items-per-page" id="itensPorPaginaCI" onchange="alterarItensPorPaginaCI()">
+                            <option value="25">25</option>
+                            <option value="50" selected>50</option>
+                            <option value="100">100</option>
+                            <option value="${todosLinks.length}">Todos</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-fixed-header-container">
+                        <table class="table" id="linksConsultaTable">
+                            <thead><tr><th>Categoria</th><th>Tema</th><th>Link</th></tr></thead>
+                            <tbody id="linksConsultaTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-container" id="paginacaoContainerCI"></div>
+                </div>
+            `;
+            
+            aplicarFiltrosCI();
+            setTimeout(iframeUpdateHeight, 300);
+        }
+
+        function gerarLinhasTabelaConsulta(links) {
+            return links.map(item => `
+                <tr>
+                    <td>${item.categoria}</td>
+                    <td>${item.tema}</td>
+                    <td><a href="${item.link}" target="_blank" class="link-acessar">Acessar <i class="material-icons" style="font-size: 14px; vertical-align: middle;">launch</i></a></td>
+                </tr>
+            `).join('');
+        }
+
+        window.aplicarFiltrosCI = function() {
+            const categoria = document.getElementById('filtroCategoriaCI')?.value;
+            const tema = document.getElementById('filtroTemaCI')?.value;
+            const buscaTema = (document.getElementById('buscaTemaCI')?.value || '').toLowerCase();
+            
+            linksFiltrados = todosLinks.filter(item => {
+                if (categoria && item.categoria !== categoria) return false;
+                if (tema && item.tema !== tema) return false;
+                if (buscaTema && !item.tema.toLowerCase().includes(buscaTema)) return false;
+                return true;
+            });
+            
+            paginaAtualCI = 1;
+            atualizarTabelaConsulta();
+        };
+
+        window.limparFiltrosCI = function() {
+            document.getElementById('filtroCategoriaCI').value = '';
+            document.getElementById('filtroTemaCI').value = '';
+            document.getElementById('buscaTemaCI').value = '';
+            linksFiltrados = [...todosLinks];
+            paginaAtualCI = 1;
+            atualizarTabelaConsulta();
+        };
+
+        window.alterarItensPorPaginaCI = function() {
+            itensPorPaginaCI = parseInt(document.getElementById('itensPorPaginaCI').value);
+            paginaAtualCI = 1;
+            atualizarTabelaConsulta();
+        };
+
+        function atualizarTabelaConsulta() {
+            const inicio = (paginaAtualCI - 1) * itensPorPaginaCI;
+            const fim = Math.min(inicio + itensPorPaginaCI, linksFiltrados.length);
+            const dadosPagina = linksFiltrados.slice(inicio, fim);
+            
+            document.getElementById('linksConsultaTableBody').innerHTML = gerarLinhasTabelaConsulta(dadosPagina);
+            document.getElementById('totalLinksBadge').innerText = linksFiltrados.length + ' links';
+            
+            totalPaginasCI = Math.ceil(linksFiltrados.length / itensPorPaginaCI);
+            renderizarPaginacaoCI();
+            setTimeout(iframeUpdateHeight, 100);
+        }
+
+        function renderizarPaginacaoCI() {
+            const container = document.getElementById('paginacaoContainerCI');
+            if (!container) return;
+            
+            if (linksFiltrados.length === 0) {
+                container.innerHTML = '<div class="pagination-info">Nenhum registro encontrado</div>';
+                return;
+            }
+            
+            const inicio = (paginaAtualCI - 1) * itensPorPaginaCI + 1;
+            const fim = Math.min(paginaAtualCI * itensPorPaginaCI, linksFiltrados.length);
+            
+            let html = `
+                <div class="pagination-info">Mostrando ${inicio}-${fim} de ${linksFiltrados.length.toLocaleString('pt-BR')} registros</div>
+                <nav><ul class="pagination mb-0">
+            `;
+            
+            html += `<li class="page-item ${paginaAtualCI === 1 ? 'disabled' : ''}"><a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI - 1}); return false;">&laquo;</a></li>`;
+            
+            let inicioPaginas = Math.max(1, paginaAtualCI - 2);
+            let fimPaginas = Math.min(totalPaginasCI, inicioPaginas + 4);
+            if (fimPaginas - inicioPaginas < 4) { inicioPaginas = Math.max(1, fimPaginas - 4); }
+            
+            for (let i = inicioPaginas; i <= fimPaginas; i++) {
+                html += `<li class="page-item ${i === paginaAtualCI ? 'active' : ''}"><a class="page-link" href="#" onclick="mudarPaginaCI(${i}); return false;">${i}</a></li>`;
+            }
+            
+            html += `<li class="page-item ${paginaAtualCI === totalPaginasCI ? 'disabled' : ''}"><a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI + 1}); return false;">&raquo;</a></li>`;
+            html += '</ul></nav>';
+            container.innerHTML = html;
+        }
+
+        window.mudarPaginaCI = function(pagina) {
+            if (pagina < 1 || pagina > totalPaginasCI) return;
+            paginaAtualCI = pagina;
+            atualizarTabelaConsulta();
+        };
+
+        // ============================================
+        // EXPORTAÇÕES (ADAPTADAS)
+        // ============================================
+        window.exportarTabelaVisaoGeralCSV = function() {
+            const dados = agruparPorCategoria(dadosFiltrados);
+            const linhas = dados.map(i => [i.categoria, i.total].map(c => `"${String(c).replace(/"/g,'""')}"`).join(';'));
+            const csv = ['Categoria;Quantidade de Links', ...linhas].join('\n');
+            const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'mapa_site_categorias.csv';
+            link.click();
+        };
+
+        window.exportarTabelaVisaoGeralPDF = function() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'portrait' });
+            const dados = agruparPorCategoria(dadosFiltrados).map(i => [i.categoria, i.total.toLocaleString('pt-BR')]);
+            doc.autoTable({
+                head: [['Categoria', 'Quantidade de Links']],
+                body: dados,
+                foot: [['Total Geral', dados.reduce((a,i)=>a+parseInt(i[1].replace(/\./g,'')),0).toLocaleString('pt-BR')]],
+                didDrawPage: (data) => {
+                    doc.setFontSize(10);
+                    doc.text('Mapa do Site - Categorias', 14, 10);
+                    doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')} - ${window.location.href}`, 14, doc.internal.pageSize.height - 5);
+                }
+            });
+            doc.save('mapa_site_categorias.pdf');
+        };
+
+        window.exportarTabelaConsultaCSV = function() {
+            const linhas = linksFiltrados.map(item => [item.categoria, item.tema, item.link].map(c => `"${String(c).replace(/"/g,'""')}"`).join(';'));
+            const csv = ['Categoria;Tema;Link', ...linhas].join('\n');
+            const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'mapa_site_links.csv';
+            link.click();
+        };
+
+        window.exportarTabelaConsultaPDF = function() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'landscape' });
+            const dados = linksFiltrados.map(item => [item.categoria, item.tema, item.link]);
+            doc.autoTable({
+                head: [['Categoria', 'Tema', 'Link']],
+                body: dados,
+                didDrawPage: (data) => {
+                    doc.setFontSize(10);
+                    doc.text('Consulta - Links do Mapa do Site', 14, 10);
+                    doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')} - ${window.location.href}`, 14, doc.internal.pageSize.height - 5);
+                }
+            });
+            doc.save('mapa_site_links.pdf');
+        };
+
+        // ============================================
+        // COMPARTILHAMENTO (MESMO DO INDEX)
+        // ============================================
+        window.toggleShare = function(id) {
+            document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show'));
+            document.getElementById(`shareOptions${id}`).classList.toggle('show');
+        };
+
+        window.copiarLink = function(e, id) {
+            e.preventDefault();
+            navigator.clipboard.writeText(window.location.href).then(() => alert('Link copiado!'));
+            document.getElementById(`shareOptions${id}`).classList.remove('show');
+        };
+
+        window.compartilharFacebook = function(e, id) {
+            e.preventDefault();
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
+            document.getElementById(`shareOptions${id}`).classList.remove('show');
+        };
+        
+        window.compartilharTwitter = function(e, id) {
+            e.preventDefault();
+            window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent('Mapa do Site - Portal da Transparência MG')}`, '_blank');
+            document.getElementById(`shareOptions${id}`).classList.remove('show');
+        };
+        
+        window.compartilharLinkedIn = function(e, id) {
+            e.preventDefault();
+            window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank');
+            document.getElementById(`shareOptions${id}`).classList.remove('show');
+        };
+        
+        window.compartilharWhatsApp = function(e, id) {
+            e.preventDefault();
+            window.open(`https://wa.me/?text=${encodeURIComponent('Mapa do Site - Portal da Transparência MG ' + window.location.href)}`, '_blank');
+            document.getElementById(`shareOptions${id}`).classList.remove('show');
+        };
+
+        // ============================================
+        // DOWNLOADS (ADAPTADO)
+        // ============================================
+        function renderizarDownloads() {
+            document.getElementById('downloads-content').innerHTML = `
+                <div class="filter-container">
+                    <h3 class="filter-label mb-3"><i class="material-icons">download</i> Downloads</h3>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="card-stats p-4 bg-white rounded shadow-sm h-100">
+                                <h4 class="fw-bold text-start mb-3"><i class="material-icons me-2">cloud_download</i> Dados Completos</h4>
+                                <p class="text-muted text-justify" style="font-size: 13px; text-align: justify;">
+                                    Arquivo CSV completo com todos os links do Mapa do Site do Portal da Transparência de Minas Gerais.
+                                </p>
+                                <div class="mt-4 text-end">
+                                    <button onclick="baixarCSV()" 
+                                            class="btn-export text-decoration-none fw-bold d-inline-block px-4 py-2"
+                                            style="color: var(--primary-dark); background-color: white; border: 1px solid var(--primary-dark); border-radius: 4px; transition: all 0.3s ease; cursor: pointer;">
+                                        <i class="material-icons me-2" style="font-size: 16px; vertical-align: middle;">download</i>Baixar CSV
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <div class="card-stats p-4 bg-white rounded shadow-sm h-100">
+                                <h4 class="fw-bold text-start mb-3"><i class="material-icons me-2">open_in_new</i> Portal de Dados Abertos</h4>
+                                <p class="text-muted text-justify" style="font-size: 13px; text-align: justify;">
+                                    Acesse o conjunto de dados do Mapa do Site no Portal de Dados Abertos de Minas Gerais.
+                                </p>
+                                <div class="mt-4 text-end">
+                                    <a href="https://dados.mg.gov.br/" 
+                                       target="_blank" 
+                                       class="btn-export text-decoration-none fw-bold d-inline-block px-4 py-2"
+                                       style="color: var(--primary-dark); background-color: white; border: 1px solid var(--primary-dark); border-radius: 4px; transition: all 0.3s ease;">
+                                        <i class="material-icons me-2" style="font-size: 16px; vertical-align: middle;">launch</i>Acessar Portal de Dados MG
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="metadata-card">
+                        <h6 class="fw-bold mb-3"><i class="material-icons me-2">info</i> Metadados da Tabela</h6>
+                        <div class="metadata-item"><strong>categoria:</strong> Categoria principal do conteúdo no site</div>
+                        <div class="metadata-item"><strong>tema:</strong> Tema ou subcategoria específica</div>
+                        <div class="metadata-item"><strong>link:</strong> URL de acesso direto ao conteúdo</div>
+                    </div>
+                </div>
+            `;
+            setTimeout(iframeUpdateHeight, 300);
+        }
+
+        window.baixarCSV = function() {
+            if (!dadosCompletos.length) return;
+            const cabecalhos = ['categoria','tema','link'];
+            const linhas = dadosCompletos.map(item => cabecalhos.map(cab => `"${(item[cab]||'').toString().replace(/"/g,'""')}"`).join(';'));
+            const csv = [cabecalhos.join(';'), ...linhas].join('\n');
+            const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'mapa_do_site_completo.csv';
+            link.click();
+        };
+    </script>
+</body>
+</html>
