@@ -503,10 +503,6 @@
                 <div class="tab-pane fade" id="consulta" role="tabpanel">
                     <div id="consulta-content"></div>
                 </div>
-                <!-- ABA 3: DOWNLOADS -->
-                <div class="tab-pane fade" id="downloads" role="tabpanel">
-                    <div id="downloads-content"></div>
-                </div>
             </div>
         </div>
     </div>
@@ -1040,69 +1036,6 @@
             document.getElementById(`shareOptions${id}`).classList.remove('show');
         };
 
-        // ============================================
-        // DOWNLOADS (ADAPTADO)
-        // ============================================
-        function renderizarDownloads() {
-            document.getElementById('downloads-content').innerHTML = `
-                <div class="filter-container">
-                    <h3 class="filter-label mb-3"><i class="material-icons">download</i> Downloads</h3>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <div class="card-stats p-4 bg-white rounded shadow-sm h-100">
-                                <h4 class="fw-bold text-start mb-3"><i class="material-icons me-2">cloud_download</i> Dados Completos</h4>
-                                <p class="text-muted text-justify" style="font-size: 13px; text-align: justify;">
-                                    Arquivo CSV completo com todos os links do Mapa do Site do Portal da Transparência de Minas Gerais.
-                                </p>
-                                <div class="mt-4 text-end">
-                                    <button onclick="baixarCSV()" 
-                                            class="btn-export text-decoration-none fw-bold d-inline-block px-4 py-2"
-                                            style="color: var(--primary-dark); background-color: white; border: 1px solid var(--primary-dark); border-radius: 4px; transition: all 0.3s ease; cursor: pointer;">
-                                        <i class="material-icons me-2" style="font-size: 16px; vertical-align: middle;">download</i>Baixar CSV
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 mb-3">
-                            <div class="card-stats p-4 bg-white rounded shadow-sm h-100">
-                                <h4 class="fw-bold text-start mb-3"><i class="material-icons me-2">open_in_new</i> Portal de Dados Abertos</h4>
-                                <p class="text-muted text-justify" style="font-size: 13px; text-align: justify;">
-                                    Acesse o conjunto de dados do Mapa do Site no Portal de Dados Abertos de Minas Gerais.
-                                </p>
-                                <div class="mt-4 text-end">
-                                    <a href="https://dados.mg.gov.br/" 
-                                       target="_blank" 
-                                       class="btn-export text-decoration-none fw-bold d-inline-block px-4 py-2"
-                                       style="color: var(--primary-dark); background-color: white; border: 1px solid var(--primary-dark); border-radius: 4px; transition: all 0.3s ease;">
-                                        <i class="material-icons me-2" style="font-size: 16px; vertical-align: middle;">launch</i>Acessar Portal de Dados MG
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="metadata-card">
-                        <h6 class="fw-bold mb-3"><i class="material-icons me-2">info</i> Metadados da Tabela</h6>
-                        <div class="metadata-item"><strong>categoria:</strong> Categoria principal do conteúdo no site</div>
-                        <div class="metadata-item"><strong>tema:</strong> Tema ou subcategoria específica</div>
-                        <div class="metadata-item"><strong>link:</strong> URL de acesso direto ao conteúdo</div>
-                    </div>
-                </div>
-            `;
-            setTimeout(iframeUpdateHeight, 300);
-        }
-
-        window.baixarCSV = function() {
-            if (!dadosCompletos.length) return;
-            const cabecalhos = ['categoria','tema','link'];
-            const linhas = dadosCompletos.map(item => cabecalhos.map(cab => `"${(item[cab]||'').toString().replace(/"/g,'""')}"`).join(';'));
-            const csv = [cabecalhos.join(';'), ...linhas].join('\n');
-            const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'mapa_do_site_completo.csv';
-            link.click();
-        };
     </script>
 </body>
 </html>
