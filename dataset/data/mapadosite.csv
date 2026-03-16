@@ -4,8 +4,7 @@ Sobre;Histórico de Atualizações;https://www.transparencia.mg.gov.br/pagina/hi
 Sobre;Legislação;https://www.transparencia.mg.gov.br/pagina/legislacao
 Sobre;Glossário;https://www.transparencia.mg.gov.br/pagina/glossario-1
 Sobre;Estrutura do Governo;https://www.transparencia.mg.gov.br/pagina/estrutura-do-governo-1
-Planejamento e Resultados;Leis Orçamentárias;https://www.transparencia.mg.gov.br/leis-orcamentarias
-Planejamento e Resultados;Propostas e Alterações Orçamentárias;https://www.transparencia.mg.gov.br/menu/proposta-e-alteracoes-orcamentarias
+Planejamento e Resultados;Leis Orçamentárias;https://www.transparencia.mg.gov.br/pagina/leis-orcamentarias
 Planejamento e Resultados;Proposta Orçamentária;https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/proposta-orcamentaria
 Planejamento e Resultados;Emendas ao Projeto da LOA;https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/emenda-orcamentaria
 Planejamento e Resultados;Alteração Orçamentária;https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/alteracao-orcamentaria
@@ -20,8 +19,8 @@ Despesas Públicas;Restos a Pagar;https://www.transparencia.mg.gov.br/despesa-es
 Despesas Públicas;Mapa de Investimento;https://www.transparencia.mg.gov.br/despesa-estado/mapa-de-investimento
 Pessoal;Remuneração dos Servidores;https://www.transparencia.mg.gov.br/remuneracao
 Pessoal;Despesa com Pessoal;https://www.transparencia.mg.gov.br/pagina/despesa-com-pessoal
-Pessoal;Estagiários;https://www.transparencia.mg.gov.br/pagina/terceirizados
-Pessoal;Terceirizados;https://www.transparencia.mg.gov.br/terceirizados
+Pessoal;Estagiários;https://www.transparencia.mg.gov.br/pagina/estagiarios
+Pessoal;Terceirizados;https://www.transparencia.mg.gov.br/pagina/terceirizados
 Pessoal;Relação Nominal dos Servidores;https://dados.mg.gov.br/dataset/relacao_nominal_servidores
 Pessoal;Cadastro CEAPE;https://www.ceape.mg.gov.br/ceape/servers
 Concursos;Concursos realizados;https://www.transparencia.mg.gov.br/concursos-e-processos-seletivos/concursos-realizados
@@ -37,7 +36,7 @@ Relatórios da Lei de Responsabilidade Fiscal – LRF;Programas Sociais;https://
 Incentivos;Incentivos Culturais;https://www.secult.mg.gov.br/documentos/lei-estadual-de-incentivo-a-cultura-leic
 Incentivos;Incentivos Esportivos;http://incentivo.esportes.mg.gov.br/projetos-aprovados/
 Incentivos;Crédito e Financiamento do Setor Público;https://www.bdmg.mg.gov.br/transparencia-documentos/
-Viagens;Diárias e Viagens;https://www.transparencia.mg.gov.br/menu/viagens-a-servico
+Viagens;Diárias e Viagens;https://www.transparencia.mg.gov.br/diarias-e-viagens/viagens
 Viagens;Voos do Governador;https://www.transparencia.mg.gov.br/pagina/voos-do-governador
 Licitações e Contratos;Compras e contratos;https://www.transparencia.mg.gov.br/licitacoes-e-contratos/compras-e-contratos
 Licitações e Contratos;Notas Fiscais;https://www.transparencia.mg.gov.br/pagina/notas-fiscais
@@ -91,7 +90,7 @@ Transparência Temática - Saúde;Lista de Medicamentos;https://www.saude.mg.gov
 Transparência Temática - Saúde;Estoque de Medicamentos;https://www.saude.mg.gov.br/obtermedicamentos/ceaf/estoque-ceaf/
 Transparência Temática - Saúde;Lista de Espera em Consultas e Internações;https://info.saude.mg.gov.br/8/paineis/32
 Transparência Temática - Saúde;Serviços Hospitalares;https://www.fhemig.mg.gov.br/atendimento/horarios-de-atendimento-dos-hospitais-da-rede-fhemig
-Transparência Temática - Saúde;Dados Abertos em Saúde;https://www.dados.mg.gov.br/group/saude
+Transparência Temática - Saúde;Dados Abertos em Saúde;https://www.dados.mg.gov.br/organization/secretaria-de-estado-de-saude-ses
 Transparência Temática - Segurança;Crimes Violentos;https://www.dados.mg.gov.br/dataset/crimes-violentos
 Transparência Temática - Segurança;Violência contra mulher;https://www.dados.mg.gov.br/dataset/violencia-contra-mulher
 Atendimento;Acesso à Informação (e-SIC);https://acessoainformacao.mg.gov.br/sistema/site/index.aspx
