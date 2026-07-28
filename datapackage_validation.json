@@ -34,10 +34,10 @@
         "scheme": "file",
         "title": "Insira um título humanamente legível para este recurso.",
         "stats": {
-          "hash": "ed59b4c4632531f168117f51ebc865f4",
-          "bytes": 13212,
+          "hash": "508f49eee18409421d9a83765a9fce32",
+          "bytes": 12757,
           "fields": 3,
-          "rows": 101
+          "rows": 104
         }
       },
       "time": 0.012,
