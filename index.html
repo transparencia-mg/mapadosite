@@ -99,6 +99,8 @@ body{margin:0;background:var(--bg);color:#333;font-family:'Montserrat',Arial,san
 (function () {
   const input = document.getElementById('siteSearch');
   const noResults = document.getElementById('noResults');
+  const ICONS = {"Planejamento e Resultados": "insert_chart", "Planejamento e Monitoramento do PPAG": "timeline", "Receitas Públicas": "attach_money", "Receitas": "attach_money", "Despesas Públicas": "receipt_long", "Pessoal": "people", "Concursos e Processos Seletivos": "assignment_ind", "Gestão Fiscal e Governamental": "balance", "Viagens a Serviço": "flight", "Licitações e Contratos": "gavel", "Transferências Obrigatórias": "swap_horiz", "Convênios e Parcerias": "handshake", "Emendas Parlamentares": "how_to_vote", "Patrimônio": "inventory_2", "Contas Anuais do Governador": "account_balance", "Acordos Judiciais de Reparação": "gavel", "COVID": "coronavirus", "Desenvolvimento Social": "volunteer_activism", "Dívidas": "money_off", "Economia": "trending_up", "Educação": "school", "Empresas": "business", "Meio Ambiente": "park", "Obras Públicas": "construction", "Patrimônio Artístico e Cultural": "museum", "Saúde": "local_hospital", "Segurança": "security", "Sobre": "info", "Atendimento": "support_agent"};
+  const CONSULTAS_ORDER = ["Planejamento e Resultados", "Receitas Públicas", "Despesas Públicas", "Pessoal", "Concursos e Processos Seletivos", "Gestão Fiscal e Governamental", "Contas Anuais do Governador", "Viagens a Serviço", "Licitações e Contratos", "Transferências Obrigatórias", "Convênios e Parcerias", "Emendas Parlamentares", "Patrimônio"];
 
   function normalize(text) {
     return String(text || '')
@@ -107,129 +109,201 @@ body{margin:0;background:var(--bg);color:#333;font-family:'Montserrat',Arial,san
       .replace(/[\u0300-\u036f]/g, '');
   }
 
+  function esc(text) {
+    return String(text ?? '').replace(/[&<>"']/g, function (c) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c];
+    });
+  }
 
-  const CONSULTAS_ORDER = [
-    'Planejamento e Resultados',
-    'Receitas Públicas',
-    'Despesas Públicas',
-    'Pessoal',
-    'Concursos e Processos Seletivos',
-    'Gestão Fiscal e Governamental',
-    'Contas Anuais do Governador',
-    'Viagens a Serviço',
-    'Licitações e Contratos',
-    'Transferências Obrigatórias',
-    'Convênios e Parcerias',
-    'Emendas Parlamentares',
-    'Patrimônio'
-  ];
+  function sortContainer(container) {
+    const orderMap = new Map(CONSULTAS_ORDER.map((name, i) => [normalize(name), i]));
+    Array.from(container.children)
+      .sort((a, b) => {
+        const an = normalize(a.querySelector('h3')?.textContent || '');
+        const bn = normalize(b.querySelector('h3')?.textContent || '');
+        const ai = orderMap.has(an) ? orderMap.get(an) : 9999;
+        const bi = orderMap.has(bn) ? orderMap.get(bn) : 9999;
+        return ai - bi || an.localeCompare(bn, 'pt-BR');
+      })
+      .forEach(card => container.appendChild(card));
+  }
 
-  function sortConsultasCards() {
-    const container = document.getElementById('consultas');
-    if (!container) return;
+  function buildCard(category, items) {
+    const article = document.createElement('article');
+    article.className = 'theme-block';
+    const searchText = normalize(category + ' ' + items.map(i => i.tema).join(' ') + ' ' + items.map(i => i.link).join(' '));
+    article.setAttribute('data-search', searchText);
 
-    const cards = Array.from(container.children);
-    const position = new Map(
-      CONSULTAS_ORDER.map((name, index) => [normalize(name), index])
-    );
+    const icon = ICONS[category] || 'folder';
+    article.innerHTML =
+      '<div class="theme-header">' +
+        '<span class="material-icons theme-icon">' + esc(icon) + '</span>' +
+        '<h3>' + esc(category) + '</h3>' +
+        '<span class="theme-count">' + items.length + '</span>' +
+      '</div>' +
+      '<div class="links-horizontal">' +
+        items.map(i =>
+          '<a class="link-item" href="' + esc(i.link) + '" target="_blank" rel="noopener noreferrer" data-search="' +
+          esc(normalize(i.tema + ' ' + i.link)) + '">' +
+          '<span class="material-icons">chevron_right</span><span>' + esc(i.tema) + '</span>' +
+          '</a>'
+        ).join('') +
+      '</div>';
+    return article;
+  }
 
-    cards.sort((a, b) => {
-      const aName = normalize(a.querySelector('h3')?.textContent || '');
-      const bName = normalize(b.querySelector('h3')?.textContent || '');
-      const ai = position.has(aName) ? position.get(aName) : 9999;
-      const bi = position.has(bName) ? position.get(bName) : 9999;
-      return ai - bi || aName.localeCompare(bName, 'pt-BR');
+  function groupByCategory(items) {
+    const map = new Map();
+    items.forEach(item => {
+      const category = item.categoria || 'Outros';
+      if (!map.has(category)) map.set(category, []);
+      map.get(category).push(item);
+    });
+    return map;
+  }
+
+  function buildFooterItem(item) {
+    const a = document.createElement('a');
+    a.className = 'footer-link searchable-item';
+    a.href = item.link;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    a.setAttribute('data-search', normalize(item.categoria + ' ' + item.tema + ' ' + item.link));
+    a.innerHTML = '<span class="material-icons">chevron_right</span><span>' + esc(item.tema) + '</span>';
+    return a;
+  }
+
+  function render(rows) {
+    const consultas = document.getElementById('consultas');
+    const tematica = document.getElementById('tematica');
+    const sobre = document.getElementById('sobreLinks');
+    const atendimento = document.getElementById('atendimentoLinks');
+
+    consultas.innerHTML = '';
+    tematica.innerHTML = '';
+    sobre.innerHTML = '';
+    atendimento.innerHTML = '';
+
+    const tipos = {consulta: [], tematica: [], sobre: [], atendimento: []};
+    rows.forEach(item => {
+      const t = normalize(item.tipo);
+      if (t === 'consulta') tipos.consulta.push(item);
+      else if (t === 'transparencia tematica') tipos.tematica.push(item);
+      else if (t === 'sobre') tipos.sobre.push(item);
+      else if (t === 'atendimento') tipos.atendimento.push(item);
     });
 
-    cards.forEach(card => container.appendChild(card));
+    groupByCategory(tipos.consulta).forEach((items, category) => consultas.appendChild(buildCard(category, items)));
+    groupByCategory(tipos.tematica).forEach((items, category) => tematica.appendChild(buildCard(category, items)));
+    tipos.sobre.forEach(item => sobre.appendChild(buildFooterItem(item)));
+    tipos.atendimento.forEach(item => atendimento.appendChild(buildFooterItem(item)));
+
+    sortContainer(consultas);
+    updateCounts();
+    runSearch();
   }
 
   function updateCounts() {
-    const consultaCards = document.querySelectorAll('#consultas .theme-block');
+    const consultasCards = document.querySelectorAll('#consultas .theme-block');
     const tematicaCards = document.querySelectorAll('#tematica .theme-block');
 
-    const linkCount = (containerId) =>
-      document.querySelectorAll('#' + containerId + ' .link-item').length;
+    const consultasLinks = document.querySelectorAll('#consultas .link-item').length;
+    const tematicaLinks = document.querySelectorAll('#tematica .link-item').length;
 
     const consultasCount = document.getElementById('consultasCount');
     const tematicaCount = document.getElementById('tematicaCount');
 
-    if (consultasCount) {
-      consultasCount.textContent =
-        consultaCards.length + ' temas • ' + linkCount('consultas') + ' links';
-    }
-
-    if (tematicaCount) {
-      tematicaCount.textContent =
-        tematicaCards.length + ' temas • ' + linkCount('tematica') + ' links';
-    }
+    if (consultasCount) consultasCount.textContent = consultasCards.length + ' temas • ' + consultasLinks + ' links';
+    if (tematicaCount) tematicaCount.textContent = tematicaCards.length + ' temas • ' + tematicaLinks + ' links';
   }
 
   function runSearch() {
     const query = normalize(input.value.trim());
     let matches = 0;
 
-    let consultasVisible = 0;
-    document.querySelectorAll('#consultasSection .theme-block').forEach(function (card) {
-      const text = normalize(card.getAttribute('data-search') || card.textContent);
-      const show = !query || text.indexOf(query) !== -1;
+    let visibleConsultas = 0;
+    document.querySelectorAll('#consultasSection .theme-block').forEach(card => {
+      const show = !query || normalize(card.getAttribute('data-search') || card.textContent).includes(query);
       card.classList.toggle('search-hidden', !show);
-      if (show) consultasVisible++;
+      if (show) visibleConsultas++;
     });
-    document.getElementById('consultasSection').style.display =
-      consultasVisible ? '' : 'none';
-    matches += consultasVisible;
 
-    let tematicaVisible = 0;
-    document.querySelectorAll('#tematicaSection .theme-block').forEach(function (card) {
-      const text = normalize(card.getAttribute('data-search') || card.textContent);
-      const show = !query || text.indexOf(query) !== -1;
+    let visibleTematica = 0;
+    document.querySelectorAll('#tematicaSection .theme-block').forEach(card => {
+      const show = !query || normalize(card.getAttribute('data-search') || card.textContent).includes(query);
       card.classList.toggle('search-hidden', !show);
-      if (show) tematicaVisible++;
+      if (show) visibleTematica++;
     });
-    document.getElementById('tematicaSection').style.display =
-      tematicaVisible ? '' : 'none';
-    matches += tematicaVisible;
 
-    document.querySelectorAll('.searchable-footer-block').forEach(function (block) {
-      const blockSearch = normalize(block.getAttribute('data-search') || '');
-      const headingMatch = !query || blockSearch.indexOf(query) !== -1;
-
-      if (headingMatch) {
+    document.querySelectorAll('.searchable-footer-block').forEach(block => {
+      const blockTitle = normalize(block.getAttribute('data-search') || '');
+      if (!query || blockTitle.includes(query)) {
         block.classList.remove('search-hidden');
-        block.querySelectorAll('.searchable-item').forEach(function (item) {
-          item.classList.remove('search-hidden');
-        });
+        block.querySelectorAll('.searchable-item').forEach(item => item.classList.remove('search-hidden'));
         matches++;
-        return;
+      } else {
+        let visibleItems = 0;
+        block.querySelectorAll('.searchable-item').forEach(item => {
+          const show = normalize(item.getAttribute('data-search') || item.textContent).includes(query);
+          item.classList.toggle('search-hidden', !show);
+          if (show) visibleItems++;
+        });
+        block.classList.toggle('search-hidden', visibleItems === 0);
+        if (visibleItems) matches++;
       }
-
-      let visibleItems = 0;
-      block.querySelectorAll('.searchable-item').forEach(function (item) {
-        const itemSearch = normalize(item.getAttribute('data-search') || item.textContent);
-        const show = itemSearch.indexOf(query) !== -1;
-        item.classList.toggle('search-hidden', !show);
-        if (show) visibleItems++;
-      });
-
-      block.classList.toggle('search-hidden', !visibleItems);
-      if (visibleItems) matches++;
     });
 
-    document.getElementById('footerSection').style.display =
-      document.querySelectorAll('.searchable-footer-block:not(.search-hidden)').length
-        ? '' : 'none';
+    document.getElementById('consultasSection').style.display = visibleConsultas ? '' : 'none';
+    document.getElementById('tematicaSection').style.display = visibleTematica ? '' : 'none';
 
+    const footerVisible = document.querySelectorAll('.searchable-footer-block:not(.search-hidden)').length > 0;
+    document.getElementById('footerSection').style.display = footerVisible ? '' : 'none';
+
+    matches += visibleConsultas + visibleTematica;
     noResults.style.display = query && !matches ? 'block' : 'none';
   }
 
-  sortConsultasCards();
+  async function loadLatestSpreadsheet() {
+    // Caminho relativo: no GitHub Pages fica no mesmo domínio e evita CORS.
+    const url = new URL('upload/mapadosite.xlsx', document.baseURI).href + '?v=' + Date.now();
+
+    try {
+      if (!window.XLSX) throw new Error('Biblioteca XLSX não carregada.');
+      const response = await fetch(url, {cache: 'no-store'});
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+
+      const buffer = await response.arrayBuffer();
+      const workbook = XLSX.read(buffer, {type: 'array'});
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
+      const json = XLSX.utils.sheet_to_json(sheet, {defval: ''});
+
+      const rows = json.map(row => ({
+        tipo: String(row['Tipo'] || '').trim(),
+        categoria: String(row['Categoria'] || '').trim(),
+        tema: String(row['Tema'] || '').trim(),
+        link: String(row['Link'] || '').trim()
+      })).filter(row => row.tipo && row.categoria && row.tema && row.link);
+
+      if (!rows.length) throw new Error('Planilha sem registros válidos.');
+      render(rows);
+    } catch (error) {
+      // O HTML mantém os dados atuais como fallback. Assim, um problema temporário
+      // no GitHub não deixa a página vazia.
+      console.warn('Não foi possível atualizar a planilha:', error);
+    }
+  }
+
+  // A página já abre com os dados atuais incorporados.
+  sortContainer(document.getElementById('consultas'));
   updateCounts();
   runSearch();
 
   input.addEventListener('input', runSearch);
   input.addEventListener('keyup', runSearch);
   input.addEventListener('search', runSearch);
+
+  // Depois da abertura, tenta substituir os dados pela planilha atual do GitHub.
+  loadLatestSpreadsheet();
 })();
 </script>
 </body>
