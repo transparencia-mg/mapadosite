@@ -1,761 +1,236 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa do Portal - Transparência MG</title>
-    
-    <!-- Fontes e ícones -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            min-height: 100vh;
-            padding: 30px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Cabeçalho */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .title {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .title h1 {
-            font-size: 32px;
-            font-weight: 800;
-            color: #1a3a5c;
-            letter-spacing: -0.5px;
-        }
-
-        .title .material-icons {
-            font-size: 40px;
-            color: #b93c42;
-        }
-
-        .update-badge {
-            background: white;
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #1a3a5c;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .update-badge .material-icons {
-            color: #b93c42;
-            font-size: 18px;
-        }
-
-        /* Seção principal - UMA COLUNA */
-        .section {
-            margin-bottom: 50px;
-        }
-
-        .section-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 25px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #b93c42;
-        }
-
-        .section-title h2 {
-            font-size: 26px;
-            font-weight: 700;
-            color: #1a3a5c;
-        }
-
-        .section-title .material-icons {
-            font-size: 32px;
-            color: #b93c42;
-        }
-
-        .section-title span {
-            background: #1a3a5c;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-left: auto;
-        }
-
-        /* Lista de Temas - UMA COLUNA */
-        .themes-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        /* Card Tema - OCUPA LARGURA TOTAL */
-        .theme-block {
-            background: white;
-            border-radius: 24px;
-            padding: 25px 30px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
-            border: 1px solid #e9ecf0;
-            transition: all 0.3s ease;
-            width: 100%;
-        }
-
-        .theme-block:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(185,60,66,0.1);
-            border-color: #b93c42;
-        }
-
-        /* Header do tema */
-        .theme-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #b93c42;
-        }
-
-        .theme-header .material-icons {
-            font-size: 28px;
-            color: #b93c42;
-        }
-
-        .theme-header h3 {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1a3a5c;
-        }
-
-        .theme-header .theme-count {
-            background: #1a3a5c;
-            color: white;
-            padding: 3px 10px;
-            border-radius: 30px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-left: auto;
-        }
-
-        /* Links em HORIZONTAL - com wrap */
-        .links-horizontal {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            align-items: center;
-        }
-
-        /* Link-item como BOTÃO HORIZONTAL */
-        .link-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 18px;
-            background: #f8fafc;
-            border-radius: 40px;
-            text-decoration: none;
-            color: #1a3a5c;
-            font-size: 13px;
-            font-weight: 500;
-            transition: all 0.2s;
-            border: 1px solid transparent;
-            white-space: nowrap;
-        }
-
-        .link-item:hover {
-            background: #1a3a5c;
-            color: white;
-            transform: translateY(-2px);
-            border-color: #1a3a5c;
-        }
-
-        .link-item .material-icons {
-            font-size: 16px;
-            color: #b93c42;
-        }
-
-        .link-item:hover .material-icons {
-            color: white;
-        }
-
-        /* Seção Sobre e Atendimento - MANTIDA IGUAL */
-        .footer-section {
-            margin-top: 50px;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .footer-block {
-            background: white;
-            border-radius: 24px;
-            padding: 25px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
-            border: 1px solid #e9ecf0;
-        }
-
-        .footer-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #b93c42;
-        }
-
-        .footer-header .material-icons {
-            font-size: 28px;
-            color: #b93c42;
-        }
-
-        .footer-header h3 {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1a3a5c;
-        }
-
-        .footer-links {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 12px;
-        }
-
-        .footer-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 15px;
-            background: #f8fafc;
-            border-radius: 30px;
-            text-decoration: none;
-            color: #1a3a5c;
-            font-size: 13px;
-            font-weight: 500;
-            transition: all 0.2s;
-            border: 1px solid transparent;
-        }
-
-        .footer-link:hover {
-            background: #1a3a5c;
-            color: white;
-            transform: translateY(-2px);
-            border-color: #1a3a5c;
-        }
-
-        .footer-link .material-icons {
-            font-size: 16px;
-            color: #b93c42;
-        }
-
-        .footer-link:hover .material-icons {
-            color: white;
-        }
-
-        /* Conector visual */
-        .connector {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 30px 0;
-        }
-
-        .connector-dot {
-            width: 8px;
-            height: 8px;
-            background: #b93c42;
-            border-radius: 50%;
-            opacity: 0.3;
-        }
-
-        @media (max-width: 768px) {
-            body { padding: 15px; }
-            .title h1 { font-size: 24px; }
-            .footer-grid { grid-template-columns: 1fr; }
-            .links-horizontal { gap: 8px; }
-            .link-item { white-space: normal; word-break: break-word; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa do Site - Transparência MG</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<style>
+:root{--blue:#005ca9;--blue-dark:#123040;--red:#e30613;--bg:#f4f6f8;--line:#dfe4e8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#333;font-family:'Montserrat',Arial,sans-serif}
+.container{max-width:1240px;margin:0 auto;padding:0 24px 45px}
+.top-search{margin:28px auto 22px}
+.map-search{max-width:900px;margin:0 auto;background:#fff;border:1px solid #cfd7de;border-radius:6px;display:flex;align-items:center;padding:0 14px;box-shadow:0 3px 12px rgba(0,0,0,.12)}
+.map-search .material-icons{color:var(--blue);font-size:22px}
+#siteSearch{border:0;outline:0;width:100%;padding:16px 11px;font:500 14px 'Montserrat',Arial,sans-serif;color:#333}
+.section{margin-bottom:40px}
+.section-title{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:10px;border-bottom:3px solid var(--red)}
+.section-title h2{margin:0;font-size:23px;color:var(--blue)}
+.section-title .material-icons{color:var(--red);font-size:27px}
+.count-badge{margin-left:auto;background:var(--blue);color:#fff;padding:5px 12px;border-radius:20px;font-size:12px}
+.themes-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.theme-block{background:#fff;border:1px solid var(--line);border-radius:10px;padding:20px;box-shadow:0 3px 12px rgba(0,0,0,.07)}
+.theme-header{display:flex;align-items:center;gap:11px;padding-bottom:13px;margin-bottom:14px;border-bottom:1px solid #e7eaed}
+.theme-icon{width:40px;height:40px;display:grid;place-items:center;border-radius:9px;background:#edf5fb;color:var(--blue);font-size:23px}
+.theme-header h3{margin:0;font-size:16px;line-height:1.25}
+.theme-count{margin-left:auto;background:var(--blue);color:#fff;padding:4px 8px;border-radius:20px;font-size:11px}
+.links-horizontal{display:flex;flex-direction:column;gap:5px}
+.link-item,.footer-link{display:flex;align-items:flex-start;gap:7px;padding:8px 9px;background:#f7f9fa;border:1px solid transparent;border-radius:5px;color:var(--blue);font-size:12px;line-height:1.35;text-decoration:none}
+.link-item:hover,.footer-link:hover{background:#edf5fb;border-color:#cbdde9}
+.link-item .material-icons,.footer-link .material-icons{font-size:16px;color:var(--red);flex:none}
+.footer-section{margin-top:42px}
+.footer-section .section-title{margin-bottom:18px}
+.footer-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.footer-block{background:#fff;border:1px solid var(--line);border-radius:10px;padding:20px;box-shadow:0 3px 12px rgba(0,0,0,.07)}
+.footer-header{display:flex;align-items:center;gap:10px;margin-bottom:15px;padding-bottom:10px;border-bottom:1px solid #e7eaed}
+.footer-header .material-icons{color:var(--blue);font-size:24px}
+.footer-header h3{margin:0;font-size:17px}
+.footer-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.search-hidden{display:none!important}
+.no-results{display:none;text-align:center;padding:25px;background:#fff;border:1px solid var(--line);border-radius:8px;color:#667085;margin-bottom:25px}
+@media(max-width:1000px){.themes-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.container{padding:0 15px 35px}.map-title h1{font-size:25px}.themes-list,.footer-grid,.footer-links{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-    <div class="container">
-        <!-- SEÇÃO 1: CONSULTAS -->
-        <div class="section">
-            <div class="section-title">
-                <span class="material-icons">search</span>
-                <h2>Consultas</h2>
-                <span>14 temas • 78 links</span>
-            </div>
+<div class="container">
 
-            <div class="themes-list">
-                <!-- Planejamento e Resultados -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">insert_chart</span>
-                        <h3>Planejamento e Resultados</h3>
-                        <span class="theme-count">7</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.transparencia.mg.gov.br/leis-orcamentarias" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Leis Orçamentárias</a>
-                        <a href="https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/proposta-orcamentaria" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Proposta Orçamentária</a>
-                        <a href="https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/emenda-orcamentaria" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Emendas ao Projeto da LOA</a>
-                        <a href="https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/alteracao-orcamentaria" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Alteração Orçamentária</a>
-                        <a href="https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/credito-orcamentario" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Crédito Orçamentário</a>
-                        <a href="https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/obras-orcadas" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Obras Orçadas</a>
-                    </div>
-                </div>
 
-                <!-- PPAG -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">timeline</span>
-                        <h3>PPAG</h3>
-                        <span class="theme-count">2</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.transparencia.mg.gov.br/planejamento-e-resultados/planejamento-e-monitoramento-ppag/programacao-execucao-ppag-programa/ppagprograma-programas/6/2025/0/0" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Programação e Execução do PPAG por Programa</a>
-                        <a href="https://www.transparencia.mg.gov.br/planejamento-e-resultados/planejamento-e-monitoramento-ppag/programacao-execucao-consolidado" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Programação e Execução – Consolidado</a>
-                    </div>
-                </div>
+<div class="top-search">
+<div class="map-search"><span class="material-icons">search</span><input id="siteSearch" type="search" placeholder="Pesquise por consulta, tema ou palavra-chave..." autocomplete="off" aria-label="Pesquisar no mapa do site"></div>
+</div>
 
-                <!-- Receitas -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">attach_money</span>
-                        <h3>Receitas</h3>
-                        <span class="theme-count">2</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.transparencia.mg.gov.br/receitas/estado-receita" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Receitas</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/renuncias-e-desoneracoes-1" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Renúncias e Desonerações</a>
-                    </div>
-                </div>
+<section class="section" id="consultasSection">
+<div class="section-title">
+  <span class="material-icons">search</span>
+  <h2>Consultas</h2>
+  <span class="count-badge" id="consultasCount"></span>
+</div>
+<div class="themes-list" id="consultas"><article class="theme-block" data-search="convenios e parcerias acordos de cooperacao tecnica convenios / parcerias de saida de recursos convenios de entrada de recursos parcerias publico privadas termos de parcerias e contratos de gestao https://www.transparencia.mg.gov.br/pagina/acordos-de-cooperacao-tecnica https://www.transparencia.mg.gov.br/convenios/convenios-de-saida-de-recursos/convenios-de-saida atualizacao de links http://www.ppp.mg.gov.br/projetos/contratos-assinados/contratos-assinados https://dados.mg.gov.br/dataset/termos-parceria-contratos-gestao"><div class="theme-header"><span class="material-icons theme-icon">handshake</span><h3>Convênios e Parcerias</h3><span class="theme-count">5</span></div><div class="links-horizontal"><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/acordos-de-cooperacao-tecnica" target="_blank" rel="noopener noreferrer" data-search="acordos de cooperacao tecnica https://www.transparencia.mg.gov.br/pagina/acordos-de-cooperacao-tecnica"><span class="material-icons">chevron_right</span><span>Acordos de Cooperação Técnica</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/convenios/convenios-de-saida-de-recursos/convenios-de-saida" target="_blank" rel="noopener noreferrer" data-search="convenios / parcerias de saida de recursos https://www.transparencia.mg.gov.br/convenios/convenios-de-saida-de-recursos/convenios-de-saida"><span class="material-icons">chevron_right</span><span>Convênios / Parcerias de Saída de Recursos</span></a><a class="link-item" href="Atualização de links" target="_blank" rel="noopener noreferrer" data-search="convenios de entrada de recursos atualizacao de links"><span class="material-icons">chevron_right</span><span>Convênios de Entrada de Recursos</span></a><a class="link-item" href="http://www.ppp.mg.gov.br/projetos/contratos-assinados/contratos-assinados" target="_blank" rel="noopener noreferrer" data-search="parcerias publico privadas http://www.ppp.mg.gov.br/projetos/contratos-assinados/contratos-assinados"><span class="material-icons">chevron_right</span><span>Parcerias Público Privadas</span></a><a class="link-item" href="https://dados.mg.gov.br/dataset/termos-parceria-contratos-gestao" target="_blank" rel="noopener noreferrer" data-search="termos de parcerias e contratos de gestao https://dados.mg.gov.br/dataset/termos-parceria-contratos-gestao"><span class="material-icons">chevron_right</span><span>Termos de Parcerias e Contratos de Gestão</span></a></div></article><article class="theme-block" data-search="planejamento e resultados alteracao orcamentaria credito orcamentario emendas ao projeto da loa leis orcamentarias obras orcadas https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/alteracao-orcamentaria https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/credito-orcamentario https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/emenda-orcamentaria https://www.transparencia.mg.gov.br/pagina/leis-orcamentarias https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/obras-orcadas"><div class="theme-header"><span class="material-icons theme-icon">insert_chart</span><h3>Planejamento e Resultados</h3><span class="theme-count">5</span></div><div class="links-horizontal"><a class="link-item" href="https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/alteracao-orcamentaria" target="_blank" rel="noopener noreferrer" data-search="alteracao orcamentaria https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/alteracao-orcamentaria"><span class="material-icons">chevron_right</span><span>Alteração Orçamentária</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/credito-orcamentario" target="_blank" rel="noopener noreferrer" data-search="credito orcamentario https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/credito-orcamentario"><span class="material-icons">chevron_right</span><span>Crédito Orçamentário</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/emenda-orcamentaria" target="_blank" rel="noopener noreferrer" data-search="emendas ao projeto da loa https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/emenda-orcamentaria"><span class="material-icons">chevron_right</span><span>Emendas ao Projeto da LOA</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/leis-orcamentarias" target="_blank" rel="noopener noreferrer" data-search="leis orcamentarias https://www.transparencia.mg.gov.br/pagina/leis-orcamentarias"><span class="material-icons">chevron_right</span><span>Leis Orçamentárias</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/obras-orcadas" target="_blank" rel="noopener noreferrer" data-search="obras orcadas https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/obras-orcadas"><span class="material-icons">chevron_right</span><span>Obras Orçadas</span></a></div></article><article class="theme-block" data-search="receitas beneficiarios das desoneracoes tributarias receitas renuncias e desoneracoes https://www.transparencia.mg.gov.br/pagina/beneficiarios-das-desoneracoes-tributarias https://www.transparencia.mg.gov.br/receitas/estado-receita https://www.transparencia.mg.gov.br/pagina/renuncias-e-desoneracoes-1"><div class="theme-header"><span class="material-icons theme-icon">attach_money</span><h3>Receitas</h3><span class="theme-count">3</span></div><div class="links-horizontal"><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/beneficiarios-das-desoneracoes-tributarias" target="_blank" rel="noopener noreferrer" data-search="beneficiarios das desoneracoes tributarias https://www.transparencia.mg.gov.br/pagina/beneficiarios-das-desoneracoes-tributarias"><span class="material-icons">chevron_right</span><span>Beneficiários das Desonerações Tributárias</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/receitas/estado-receita" target="_blank" rel="noopener noreferrer" data-search="receitas https://www.transparencia.mg.gov.br/receitas/estado-receita"><span class="material-icons">chevron_right</span><span>Receitas</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/renuncias-e-desoneracoes-1" target="_blank" rel="noopener noreferrer" data-search="renuncias e desoneracoes https://www.transparencia.mg.gov.br/pagina/renuncias-e-desoneracoes-1"><span class="material-icons">chevron_right</span><span>Renúncias e Desonerações</span></a></div></article><article class="theme-block" data-search="patrimonio bens moveis frota https://www.transparencia.mg.gov.br/patrimonio/bens-moveis https://www.transparencia.mg.gov.br/patrimonio/frota"><div class="theme-header"><span class="material-icons theme-icon">inventory_2</span><h3>Patrimônio</h3><span class="theme-count">2</span></div><div class="links-horizontal"><a class="link-item" href="https://www.transparencia.mg.gov.br/patrimonio/bens-moveis" target="_blank" rel="noopener noreferrer" data-search="bens moveis https://www.transparencia.mg.gov.br/patrimonio/bens-moveis"><span class="material-icons">chevron_right</span><span>Bens Móveis</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/patrimonio/frota" target="_blank" rel="noopener noreferrer" data-search="frota https://www.transparencia.mg.gov.br/patrimonio/frota"><span class="material-icons">chevron_right</span><span>Frota</span></a></div></article><article class="theme-block" data-search="pessoal cadastro ceape despesa com pessoal estagiarios legislacao das carreiras relacao nominal dos servidores remuneracao dos servidores tabelas de vencimento basico terceirizados https://www.ceape.mg.gov.br/ceape/servers https://www.transparencia.mg.gov.br/pagina/despesa-com-pessoal https://www.transparencia.mg.gov.br/pagina/estagiarios https://www.mg.gov.br/planejamento/pagina/gestao-de-pessoas/legislacao/legislacao-de-carreira https://dados.mg.gov.br/dataset/relacao_nominal_servidores https://www.transparencia.mg.gov.br/remuneracao https://www.mg.gov.br/planejamento/pagina/gestao-de-pessoas/carreiras-e-remuneracao/tabelas-de-vencimento-basico https://www.transparencia.mg.gov.br/pagina/terceirizados"><div class="theme-header"><span class="material-icons theme-icon">people</span><h3>Pessoal</h3><span class="theme-count">8</span></div><div class="links-horizontal"><a class="link-item" href="https://www.ceape.mg.gov.br/ceape/servers" target="_blank" rel="noopener noreferrer" data-search="cadastro ceape https://www.ceape.mg.gov.br/ceape/servers"><span class="material-icons">chevron_right</span><span>Cadastro CEAPE</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/despesa-com-pessoal" target="_blank" rel="noopener noreferrer" data-search="despesa com pessoal https://www.transparencia.mg.gov.br/pagina/despesa-com-pessoal"><span class="material-icons">chevron_right</span><span>Despesa com Pessoal</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/estagiarios" target="_blank" rel="noopener noreferrer" data-search="estagiarios https://www.transparencia.mg.gov.br/pagina/estagiarios"><span class="material-icons">chevron_right</span><span>Estagiários</span></a><a class="link-item" href="https://www.mg.gov.br/planejamento/pagina/gestao-de-pessoas/legislacao/legislacao-de-carreira" target="_blank" rel="noopener noreferrer" data-search="legislacao das carreiras https://www.mg.gov.br/planejamento/pagina/gestao-de-pessoas/legislacao/legislacao-de-carreira"><span class="material-icons">chevron_right</span><span>Legislação das Carreiras</span></a><a class="link-item" href="https://dados.mg.gov.br/dataset/relacao_nominal_servidores" target="_blank" rel="noopener noreferrer" data-search="relacao nominal dos servidores https://dados.mg.gov.br/dataset/relacao_nominal_servidores"><span class="material-icons">chevron_right</span><span>Relação Nominal dos Servidores</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/remuneracao" target="_blank" rel="noopener noreferrer" data-search="remuneracao dos servidores https://www.transparencia.mg.gov.br/remuneracao"><span class="material-icons">chevron_right</span><span>Remuneração dos Servidores</span></a><a class="link-item" href="https://www.mg.gov.br/planejamento/pagina/gestao-de-pessoas/carreiras-e-remuneracao/tabelas-de-vencimento-basico" target="_blank" rel="noopener noreferrer" data-search="tabelas de vencimento basico https://www.mg.gov.br/planejamento/pagina/gestao-de-pessoas/carreiras-e-remuneracao/tabelas-de-vencimento-basico"><span class="material-icons">chevron_right</span><span>Tabelas de Vencimento Básico</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/terceirizados" target="_blank" rel="noopener noreferrer" data-search="terceirizados https://www.transparencia.mg.gov.br/pagina/terceirizados"><span class="material-icons">chevron_right</span><span>Terceirizados</span></a></div></article><article class="theme-block" data-search="licitacoes e contratos cafimp compras e contratos contratos fiscais de contrato licitacoes notas fiscais plano anual de compras – pac https://compras.mg.gov.br/fornecedores/cadastro-de-fornecedores-impedidos-cafimp/ https://www.transparencia.mg.gov.br/licitacoes-e-contratos/compras-e-contratos https://www.transparencia.mg.gov.br/pagina/contratos https://www.transparencia.mg.gov.br/pagina/fiscais-de-contrato https://www.transparencia.mg.gov.br/pagina/licitacoes https://www.transparencia.mg.gov.br/pagina/notas-fiscais https://compras.mg.gov.br/agente-publico/planejamento-de-compras-subcomp/"><div class="theme-header"><span class="material-icons theme-icon">gavel</span><h3>Licitações e Contratos</h3><span class="theme-count">7</span></div><div class="links-horizontal"><a class="link-item" href="https://compras.mg.gov.br/fornecedores/cadastro-de-fornecedores-impedidos-cafimp/" target="_blank" rel="noopener noreferrer" data-search="cafimp https://compras.mg.gov.br/fornecedores/cadastro-de-fornecedores-impedidos-cafimp/"><span class="material-icons">chevron_right</span><span>CAFIMP</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/licitacoes-e-contratos/compras-e-contratos" target="_blank" rel="noopener noreferrer" data-search="compras e contratos https://www.transparencia.mg.gov.br/licitacoes-e-contratos/compras-e-contratos"><span class="material-icons">chevron_right</span><span>Compras e contratos</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/contratos" target="_blank" rel="noopener noreferrer" data-search="contratos https://www.transparencia.mg.gov.br/pagina/contratos"><span class="material-icons">chevron_right</span><span>Contratos</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/fiscais-de-contrato" target="_blank" rel="noopener noreferrer" data-search="fiscais de contrato https://www.transparencia.mg.gov.br/pagina/fiscais-de-contrato"><span class="material-icons">chevron_right</span><span>Fiscais de contrato</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/licitacoes" target="_blank" rel="noopener noreferrer" data-search="licitacoes https://www.transparencia.mg.gov.br/pagina/licitacoes"><span class="material-icons">chevron_right</span><span>Licitações</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/notas-fiscais" target="_blank" rel="noopener noreferrer" data-search="notas fiscais https://www.transparencia.mg.gov.br/pagina/notas-fiscais"><span class="material-icons">chevron_right</span><span>Notas Fiscais</span></a><a class="link-item" href="https://compras.mg.gov.br/agente-publico/planejamento-de-compras-subcomp/" target="_blank" rel="noopener noreferrer" data-search="plano anual de compras – pac https://compras.mg.gov.br/agente-publico/planejamento-de-compras-subcomp/"><span class="material-icons">chevron_right</span><span>Plano anual de compras – PAC</span></a></div></article><article class="theme-block" data-search="concursos e processos seletivos concursos realizados editais concursos publicos processos seletivos https://www.transparencia.mg.gov.br/concursos-e-processos-seletivos/concursos-realizados https://www.mg.gov.br/planejamento/pagina/gestao-de-pessoas/recrutamento-e-selecao/concursos-publicos https://www.transparencia.mg.gov.br/menu/processos-seletivos-1"><div class="theme-header"><span class="material-icons theme-icon">assignment_ind</span><h3>Concursos e Processos Seletivos</h3><span class="theme-count">3</span></div><div class="links-horizontal"><a class="link-item" href="https://www.transparencia.mg.gov.br/concursos-e-processos-seletivos/concursos-realizados" target="_blank" rel="noopener noreferrer" data-search="concursos realizados https://www.transparencia.mg.gov.br/concursos-e-processos-seletivos/concursos-realizados"><span class="material-icons">chevron_right</span><span>Concursos realizados</span></a><a class="link-item" href="https://www.mg.gov.br/planejamento/pagina/gestao-de-pessoas/recrutamento-e-selecao/concursos-publicos" target="_blank" rel="noopener noreferrer" data-search="editais concursos publicos https://www.mg.gov.br/planejamento/pagina/gestao-de-pessoas/recrutamento-e-selecao/concursos-publicos"><span class="material-icons">chevron_right</span><span>Editais concursos públicos</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/menu/processos-seletivos-1" target="_blank" rel="noopener noreferrer" data-search="processos seletivos https://www.transparencia.mg.gov.br/menu/processos-seletivos-1"><span class="material-icons">chevron_right</span><span>Processos seletivos</span></a></div></article><article class="theme-block" data-search="despesas publicas despesa por  empenho despesas mapa de investimento ordem cronologica restos a pagar https://www.transparencia.mg.gov.br/pagina/despesa-por-empenho https://transparencia.mg.gov.br/despesa-estado/despesa https://www.transparencia.mg.gov.br/despesa-estado/mapa-de-investimento https://www.transparencia.mg.gov.br/pagina/ordem-cronologica https://www.transparencia.mg.gov.br/despesa-estado/restos-a-pagar"><div class="theme-header"><span class="material-icons theme-icon">receipt_long</span><h3>Despesas Públicas</h3><span class="theme-count">5</span></div><div class="links-horizontal"><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/despesa-por-empenho" target="_blank" rel="noopener noreferrer" data-search="despesa por  empenho https://www.transparencia.mg.gov.br/pagina/despesa-por-empenho"><span class="material-icons">chevron_right</span><span>Despesa por  empenho</span></a><a class="link-item" href="https://transparencia.mg.gov.br/despesa-estado/despesa" target="_blank" rel="noopener noreferrer" data-search="despesas https://transparencia.mg.gov.br/despesa-estado/despesa"><span class="material-icons">chevron_right</span><span>Despesas</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/despesa-estado/mapa-de-investimento" target="_blank" rel="noopener noreferrer" data-search="mapa de investimento https://www.transparencia.mg.gov.br/despesa-estado/mapa-de-investimento"><span class="material-icons">chevron_right</span><span>Mapa de Investimento</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/ordem-cronologica" target="_blank" rel="noopener noreferrer" data-search="ordem cronologica https://www.transparencia.mg.gov.br/pagina/ordem-cronologica"><span class="material-icons">chevron_right</span><span>Ordem Cronológica</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/despesa-estado/restos-a-pagar" target="_blank" rel="noopener noreferrer" data-search="restos a pagar https://www.transparencia.mg.gov.br/despesa-estado/restos-a-pagar"><span class="material-icons">chevron_right</span><span>Restos a Pagar</span></a></div></article><article class="theme-block" data-search="viagens a servico diarias e viagens tabela de diarias e viagens voos do governador https://www.transparencia.mg.gov.br/diarias-e-viagens/viagens https://www.almg.gov.br/legislacao-mineira/dec/47045/2016 https://www.transparencia.mg.gov.br/pagina/voos-do-governador"><div class="theme-header"><span class="material-icons theme-icon">flight</span><h3>Viagens a Serviço</h3><span class="theme-count">3</span></div><div class="links-horizontal"><a class="link-item" href="https://www.transparencia.mg.gov.br/diarias-e-viagens/viagens" target="_blank" rel="noopener noreferrer" data-search="diarias e viagens https://www.transparencia.mg.gov.br/diarias-e-viagens/viagens"><span class="material-icons">chevron_right</span><span>Diárias e Viagens</span></a><a class="link-item" href="https://www.almg.gov.br/legislacao-mineira/DEC/47045/2016" target="_blank" rel="noopener noreferrer" data-search="tabela de diarias e viagens https://www.almg.gov.br/legislacao-mineira/dec/47045/2016"><span class="material-icons">chevron_right</span><span>Tabela de Diárias e Viagens</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/voos-do-governador" target="_blank" rel="noopener noreferrer" data-search="voos do governador https://www.transparencia.mg.gov.br/pagina/voos-do-governador"><span class="material-icons">chevron_right</span><span>Voos do Governador</span></a></div></article><article class="theme-block" data-search="emendas parlamentares execucao das emendas parlamentares federais painel de emendas estaduais https://www.transparencia.mg.gov.br/pagina/execucao-das-emendas-parlamentares https://www.emendas.mg.gov.br/transparencia/"><div class="theme-header"><span class="material-icons theme-icon">how_to_vote</span><h3>Emendas Parlamentares</h3><span class="theme-count">2</span></div><div class="links-horizontal"><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/execucao-das-emendas-parlamentares" target="_blank" rel="noopener noreferrer" data-search="execucao das emendas parlamentares federais https://www.transparencia.mg.gov.br/pagina/execucao-das-emendas-parlamentares"><span class="material-icons">chevron_right</span><span>Execução das Emendas Parlamentares Federais</span></a><a class="link-item" href="https://www.emendas.mg.gov.br/transparencia/" target="_blank" rel="noopener noreferrer" data-search="painel de emendas estaduais https://www.emendas.mg.gov.br/transparencia/"><span class="material-icons">chevron_right</span><span>Painel de Emendas Estaduais</span></a></div></article><article class="theme-block" data-search="gestao fiscal e governamental incentivos / credito e financiamento do setor publico incentivos / incentivos culturais incentivos / incentivos esportivos relatorios da lei de responsabilidade fiscal / fundo de erradicacao da miseria relatorios da lei de responsabilidade fiscal / programas de reestruturacao e ajuste fiscal relatorios da lei de responsabilidade fiscal / programas sociais relatorios da lei de responsabilidade fiscal / relatorio de gestao fiscal – rgf relatorios da lei de responsabilidade fiscal / relatorio resumido da execucao orcamentaria – rreo relatorios da lei de responsabilidade fiscal /demonstrativos quadrimestrais relatorios da lei de responsabilidade fiscal/ atendimento aos indices constitucionais https://www.bdmg.mg.gov.br/transparencia-documentos/ https://www.secult.mg.gov.br/documentos/lei-estadual-de-incentivo-a-cultura-leic http://incentivo.esportes.mg.gov.br/projetos-aprovados/ https://drive.google.com/drive/u/0/folders/1pb_0-4u5ilyja6mi2tewgkpnnlwstsdt https://www.fazenda.mg.gov.br/tesouro-estadual/contadoria-geral/programa-de-reestruturacao-e-ajuste-fiscal/index.html https://drive.google.com/drive/u/0/folders/1lktezujg8pnrgas3kjoxnlztwvsi_1kb https://www.fazenda.mg.gov.br/governo/contadoria_geral/lei_responsabilidade_fiscal https://www.fazenda.mg.gov.br/governo/contadoria_geral/lei_responsabilidade_fiscal https://www.fazenda.mg.gov.br/governo/contadoria_geral/atendimentos_constitucionais/index_ldo_ano_atual.html https://www.fazenda.mg.gov.br/governo/contadoria_geral/atendimentos_constitucionais"><div class="theme-header"><span class="material-icons theme-icon">balance</span><h3>Gestão Fiscal e Governamental</h3><span class="theme-count">10</span></div><div class="links-horizontal"><a class="link-item" href="https://www.bdmg.mg.gov.br/transparencia-documentos/" target="_blank" rel="noopener noreferrer" data-search="incentivos / credito e financiamento do setor publico https://www.bdmg.mg.gov.br/transparencia-documentos/"><span class="material-icons">chevron_right</span><span>Incentivos / Crédito e Financiamento do Setor Público</span></a><a class="link-item" href="https://www.secult.mg.gov.br/documentos/lei-estadual-de-incentivo-a-cultura-leic" target="_blank" rel="noopener noreferrer" data-search="incentivos / incentivos culturais https://www.secult.mg.gov.br/documentos/lei-estadual-de-incentivo-a-cultura-leic"><span class="material-icons">chevron_right</span><span>Incentivos / Incentivos Culturais</span></a><a class="link-item" href="http://incentivo.esportes.mg.gov.br/projetos-aprovados/" target="_blank" rel="noopener noreferrer" data-search="incentivos / incentivos esportivos http://incentivo.esportes.mg.gov.br/projetos-aprovados/"><span class="material-icons">chevron_right</span><span>Incentivos / Incentivos Esportivos</span></a><a class="link-item" href="https://drive.google.com/drive/u/0/folders/1Pb_0-4u5ilYJa6Mi2tEwGKpnNlWstSDT" target="_blank" rel="noopener noreferrer" data-search="relatorios da lei de responsabilidade fiscal / fundo de erradicacao da miseria https://drive.google.com/drive/u/0/folders/1pb_0-4u5ilyja6mi2tewgkpnnlwstsdt"><span class="material-icons">chevron_right</span><span>Relatórios da Lei de Responsabilidade Fiscal / Fundo de Erradicação da Miséria</span></a><a class="link-item" href="https://www.fazenda.mg.gov.br/tesouro-estadual/contadoria-geral/programa-de-reestruturacao-e-ajuste-fiscal/index.html" target="_blank" rel="noopener noreferrer" data-search="relatorios da lei de responsabilidade fiscal / programas de reestruturacao e ajuste fiscal https://www.fazenda.mg.gov.br/tesouro-estadual/contadoria-geral/programa-de-reestruturacao-e-ajuste-fiscal/index.html"><span class="material-icons">chevron_right</span><span>Relatórios da Lei de Responsabilidade Fiscal / Programas de Reestruturação e Ajuste Fiscal</span></a><a class="link-item" href="https://drive.google.com/drive/u/0/folders/1lktezuJG8pNRGAS3KjoXnlzTWVSi_1Kb" target="_blank" rel="noopener noreferrer" data-search="relatorios da lei de responsabilidade fiscal / programas sociais https://drive.google.com/drive/u/0/folders/1lktezujg8pnrgas3kjoxnlztwvsi_1kb"><span class="material-icons">chevron_right</span><span>Relatórios da Lei de Responsabilidade Fiscal / Programas Sociais</span></a><a class="link-item" href="https://www.fazenda.mg.gov.br/governo/contadoria_geral/lei_responsabilidade_fiscal" target="_blank" rel="noopener noreferrer" data-search="relatorios da lei de responsabilidade fiscal / relatorio de gestao fiscal – rgf https://www.fazenda.mg.gov.br/governo/contadoria_geral/lei_responsabilidade_fiscal"><span class="material-icons">chevron_right</span><span>Relatórios da Lei de Responsabilidade Fiscal / Relatório de Gestão Fiscal – RGF</span></a><a class="link-item" href="https://www.fazenda.mg.gov.br/governo/contadoria_geral/lei_responsabilidade_fiscal" target="_blank" rel="noopener noreferrer" data-search="relatorios da lei de responsabilidade fiscal / relatorio resumido da execucao orcamentaria – rreo https://www.fazenda.mg.gov.br/governo/contadoria_geral/lei_responsabilidade_fiscal"><span class="material-icons">chevron_right</span><span>Relatórios da Lei de Responsabilidade Fiscal / Relatório Resumido da Execução Orçamentária – RREO</span></a><a class="link-item" href="https://www.fazenda.mg.gov.br/governo/contadoria_geral/atendimentos_constitucionais/index_ldo_ano_atual.html" target="_blank" rel="noopener noreferrer" data-search="relatorios da lei de responsabilidade fiscal /demonstrativos quadrimestrais https://www.fazenda.mg.gov.br/governo/contadoria_geral/atendimentos_constitucionais/index_ldo_ano_atual.html"><span class="material-icons">chevron_right</span><span>Relatórios da Lei de Responsabilidade Fiscal /Demonstrativos Quadrimestrais</span></a><a class="link-item" href="https://www.fazenda.mg.gov.br/governo/contadoria_geral/atendimentos_constitucionais" target="_blank" rel="noopener noreferrer" data-search="relatorios da lei de responsabilidade fiscal/ atendimento aos indices constitucionais https://www.fazenda.mg.gov.br/governo/contadoria_geral/atendimentos_constitucionais"><span class="material-icons">chevron_right</span><span>Relatórios da Lei de Responsabilidade Fiscal/ Atendimento aos Índices Constitucionais</span></a></div></article><article class="theme-block" data-search="contas anuais do governador julgamento das contas pelo tce relatorio de gestao e balanco geral do estado https://www.transparencia.mg.gov.br/pagina/julgamento-das-contas-do-governador-pelo-tce https://www.transparencia.mg.gov.br/pagina/relatorio-de-gestao-e-balanco-geral-do-estado"><div class="theme-header"><span class="material-icons theme-icon">account_balance</span><h3>Contas Anuais do Governador</h3><span class="theme-count">2</span></div><div class="links-horizontal"><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/julgamento-das-contas-do-governador-pelo-tce" target="_blank" rel="noopener noreferrer" data-search="julgamento das contas pelo tce https://www.transparencia.mg.gov.br/pagina/julgamento-das-contas-do-governador-pelo-tce"><span class="material-icons">chevron_right</span><span>Julgamento das Contas pelo TCE</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/relatorio-de-gestao-e-balanco-geral-do-estado" target="_blank" rel="noopener noreferrer" data-search="relatorio de gestao e balanco geral do estado https://www.transparencia.mg.gov.br/pagina/relatorio-de-gestao-e-balanco-geral-do-estado"><span class="material-icons">chevron_right</span><span>Relatório de Gestão e Balanço Geral do Estado</span></a></div></article><article class="theme-block" data-search="planejamento e monitoramento do ppag programacao e execucao – consolidado programacao e execucao do ppag por programa https://www.transparencia.mg.gov.br/planejamento-e-resultados/planejamento-e-monitoramento-ppag/programacao-execucao-consolidado https://www.transparencia.mg.gov.br/planejamento-e-resultados/planejamento-e-monitoramento-ppag/programacao-execucao-ppag-programa/ppagprograma-programas/6/2025/0/0"><div class="theme-header"><span class="material-icons theme-icon">timeline</span><h3>Planejamento e Monitoramento do PPAG</h3><span class="theme-count">2</span></div><div class="links-horizontal"><a class="link-item" href="https://www.transparencia.mg.gov.br/planejamento-e-resultados/planejamento-e-monitoramento-ppag/programacao-execucao-consolidado" target="_blank" rel="noopener noreferrer" data-search="programacao e execucao – consolidado https://www.transparencia.mg.gov.br/planejamento-e-resultados/planejamento-e-monitoramento-ppag/programacao-execucao-consolidado"><span class="material-icons">chevron_right</span><span>Programação e Execução – Consolidado</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/planejamento-e-resultados/planejamento-e-monitoramento-ppag/programacao-execucao-ppag-programa/ppagprograma-programas/6/2025/0/0" target="_blank" rel="noopener noreferrer" data-search="programacao e execucao do ppag por programa https://www.transparencia.mg.gov.br/planejamento-e-resultados/planejamento-e-monitoramento-ppag/programacao-execucao-ppag-programa/ppagprograma-programas/6/2025/0/0"><span class="material-icons">chevron_right</span><span>Programação e Execução do PPAG por Programa</span></a></div></article><article class="theme-block" data-search="transferencias obrigatorias transferencias de impostos a municipios transferencias recebidas do governo federal https://www.transparencia.mg.gov.br/menu/transferencias-obrigatorias-1 https://www.transparencia.mg.gov.br/menu/transferencias-obrigatorias-1"><div class="theme-header"><span class="material-icons theme-icon">swap_horiz</span><h3>Transferências Obrigatórias</h3><span class="theme-count">2</span></div><div class="links-horizontal"><a class="link-item" href="https://www.transparencia.mg.gov.br/menu/transferencias-obrigatorias-1" target="_blank" rel="noopener noreferrer" data-search="transferencias de impostos a municipios https://www.transparencia.mg.gov.br/menu/transferencias-obrigatorias-1"><span class="material-icons">chevron_right</span><span>Transferências de impostos a municípios</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/menu/transferencias-obrigatorias-1" target="_blank" rel="noopener noreferrer" data-search="transferencias recebidas do governo federal https://www.transparencia.mg.gov.br/menu/transferencias-obrigatorias-1"><span class="material-icons">chevron_right</span><span>Transferências recebidas do Governo Federal</span></a></div></article></div>
+</section>
 
-                <!-- Despesas Públicas -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">receipt</span>
-                        <h3>Despesas Públicas</h3>
-                        <span class="theme-count">3</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://transparencia.mg.gov.br/despesa-estado/despesa" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Despesas</a>
-                        <a href="https://www.transparencia.mg.gov.br/despesa-estado/restos-a-pagar" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Restos a Pagar</a>
-                        <a href="https://www.transparencia.mg.gov.br/despesa-estado/mapa-de-investimento" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Mapa de Investimento</a>
-                    </div>
-                </div>
+<section class="section" id="tematicaSection">
+<div class="section-title"><span class="material-icons">visibility</span><h2>Transparência Temática</h2><span class="count-badge" id="tematicaCount">0 temas • 0 links</span></div>
+<div class="themes-list" id="tematica"><article class="theme-block" data-search="acordos judiciais de reparacao acordo judicial de reparacao do rio doce despesa de pessoal – acordo vale execucao do acordo judicial de reparacao da vale https://www.transparencia.mg.gov.br/pagina/acordo-judicial-de-reparacao-do-rio-doce https://www.transparencia.mg.gov.br/pagina/despesa-de-pessoal-acordo-judicial-da-vale https://www.transparencia.mg.gov.br/eventos-extraordinarios/acordo-judicial/acordo-judicial-reparacao-vale"><div class="theme-header"><span class="material-icons theme-icon">gavel</span><h3>Acordos Judiciais de Reparação</h3><span class="theme-count">3</span></div><div class="links-horizontal"><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/acordo-judicial-de-reparacao-do-rio-doce" target="_blank" rel="noopener noreferrer" data-search="acordo judicial de reparacao do rio doce https://www.transparencia.mg.gov.br/pagina/acordo-judicial-de-reparacao-do-rio-doce"><span class="material-icons">chevron_right</span><span>Acordo Judicial de Reparação do Rio Doce</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/despesa-de-pessoal-acordo-judicial-da-vale" target="_blank" rel="noopener noreferrer" data-search="despesa de pessoal – acordo vale https://www.transparencia.mg.gov.br/pagina/despesa-de-pessoal-acordo-judicial-da-vale"><span class="material-icons">chevron_right</span><span>Despesa de Pessoal – Acordo Vale</span></a><a class="link-item" href="https://www.transparencia.mg.gov.br/eventos-extraordinarios/acordo-judicial/acordo-judicial-reparacao-vale" target="_blank" rel="noopener noreferrer" data-search="execucao do acordo judicial de reparacao da vale https://www.transparencia.mg.gov.br/eventos-extraordinarios/acordo-judicial/acordo-judicial-reparacao-vale"><span class="material-icons">chevron_right</span><span>Execução do Acordo Judicial de Reparação da Vale</span></a></div></article><article class="theme-block" data-search="desenvolvimento social auxilios financeiros programas de transferencia de renda https://www.dados.mg.gov.br/dataset/auxilios-financeiros https://www.dados.mg.gov.br/dataset/programas-transferencia-renda"><div class="theme-header"><span class="material-icons theme-icon">volunteer_activism</span><h3>Desenvolvimento Social</h3><span class="theme-count">2</span></div><div class="links-horizontal"><a class="link-item" href="https://www.dados.mg.gov.br/dataset/auxilios-financeiros" target="_blank" rel="noopener noreferrer" data-search="auxilios financeiros https://www.dados.mg.gov.br/dataset/auxilios-financeiros"><span class="material-icons">chevron_right</span><span>Auxílios Financeiros</span></a><a class="link-item" href="https://www.dados.mg.gov.br/dataset/programas-transferencia-renda" target="_blank" rel="noopener noreferrer" data-search="programas de transferencia de renda https://www.dados.mg.gov.br/dataset/programas-transferencia-renda"><span class="material-icons">chevron_right</span><span>Programas de Transferência de Renda</span></a></div></article><article class="theme-block" data-search="covid covid-19 https://www.transparencia.mg.gov.br/eventos-extraordinarios/covid-19/compras-contratos"><div class="theme-header"><span class="material-icons theme-icon">coronavirus</span><h3>COVID</h3><span class="theme-count">1</span></div><div class="links-horizontal"><a class="link-item" href="https://www.transparencia.mg.gov.br/eventos-extraordinarios/covid-19/compras-contratos" target="_blank" rel="noopener noreferrer" data-search="covid-19 https://www.transparencia.mg.gov.br/eventos-extraordinarios/covid-19/compras-contratos"><span class="material-icons">chevron_right</span><span>COVID-19</span></a></div></article><article class="theme-block" data-search="educacao creches escolares fundeb lista de escolas plano estadual de educacao vagas para contratacao temporaria https://www.transparencia.mg.gov.br/pagina/creches-escolares https://fundeb.educacao.mg.gov.br/index.php/documentos/atas https://www.educacao.mg.gov.br/escolas/painel-escolas-de-minas/ https://www.educacao.mg.gov.br/plano-estadual-de-educacao/ https://controlequadropessoal.educacao.mg.gov.br/divulgacao"><div class="theme-header"><span class="material-icons theme-icon">school</span><h3>Educação</h3><span class="theme-count">5</span></div><div class="links-horizontal"><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/creches-escolares" target="_blank" rel="noopener noreferrer" data-search="creches escolares https://www.transparencia.mg.gov.br/pagina/creches-escolares"><span class="material-icons">chevron_right</span><span>Creches Escolares</span></a><a class="link-item" href="https://fundeb.educacao.mg.gov.br/index.php/documentos/atas" target="_blank" rel="noopener noreferrer" data-search="fundeb https://fundeb.educacao.mg.gov.br/index.php/documentos/atas"><span class="material-icons">chevron_right</span><span>FUNDEB</span></a><a class="link-item" href="https://www.educacao.mg.gov.br/escolas/painel-escolas-de-minas/" target="_blank" rel="noopener noreferrer" data-search="lista de escolas https://www.educacao.mg.gov.br/escolas/painel-escolas-de-minas/"><span class="material-icons">chevron_right</span><span>Lista de Escolas</span></a><a class="link-item" href="https://www.educacao.mg.gov.br/plano-estadual-de-educacao/" target="_blank" rel="noopener noreferrer" data-search="plano estadual de educacao https://www.educacao.mg.gov.br/plano-estadual-de-educacao/"><span class="material-icons">chevron_right</span><span>Plano Estadual de Educação</span></a><a class="link-item" href="https://controlequadropessoal.educacao.mg.gov.br/divulgacao" target="_blank" rel="noopener noreferrer" data-search="vagas para contratacao temporaria https://controlequadropessoal.educacao.mg.gov.br/divulgacao"><span class="material-icons">chevron_right</span><span>Vagas para Contratação Temporária</span></a></div></article><article class="theme-block" data-search="seguranca crimes violentos violencia contra mulher https://www.dados.mg.gov.br/dataset/crimes-violentos https://www.dados.mg.gov.br/dataset/violencia-contra-mulher"><div class="theme-header"><span class="material-icons theme-icon">security</span><h3>Segurança</h3><span class="theme-count">2</span></div><div class="links-horizontal"><a class="link-item" href="https://www.dados.mg.gov.br/dataset/crimes-violentos" target="_blank" rel="noopener noreferrer" data-search="crimes violentos https://www.dados.mg.gov.br/dataset/crimes-violentos"><span class="material-icons">chevron_right</span><span>Crimes Violentos</span></a><a class="link-item" href="https://www.dados.mg.gov.br/dataset/violencia-contra-mulher" target="_blank" rel="noopener noreferrer" data-search="violencia contra mulher https://www.dados.mg.gov.br/dataset/violencia-contra-mulher"><span class="material-icons">chevron_right</span><span>Violência contra mulher</span></a></div></article><article class="theme-block" data-search="saude dados abertos em saude estoque de medicamentos instrumentos de planejamento e gestao lista de espera em consultas e internacoes lista de medicamentos painel do plano estadual de saude plano estadual de saude 2024-2027 servicos hospitalares vacinas https://www.dados.mg.gov.br/organization/secretaria-de-estado-de-saude-ses https://www.saude.mg.gov.br/obtermedicamentos/ceaf/estoque-ceaf/ https://www.saude.mg.gov.br/instrumentos-de-planejamento-e-gestao-do-sus/ https://info.saude.mg.gov.br/8/paineis/32 https://www.saude.mg.gov.br/obtermedicamentos/ https://app.powerbi.com/view?r=eyjrijoizgyymgnmzwutmwnjny00yjdjlwewzjgtztg4m2vkogi5mwm1iiwidci6ijg3ztrkytjiltgyzgytndhmni05mtu3lty5yznjytywmgrmmiisimmiojr9 https://www.saude.mg.gov.br/wp-content/uploads/2021/01/pes-24-27-04.2024-1-217.pdf https://www.fhemig.mg.gov.br/atendimento/horarios-de-atendimento-dos-hospitais-da-rede-fhemig https://www.saude.mg.gov.br/vacinamaisminas/"><div class="theme-header"><span class="material-icons theme-icon">local_hospital</span><h3>Saúde</h3><span class="theme-count">9</span></div><div class="links-horizontal"><a class="link-item" href="https://www.dados.mg.gov.br/organization/secretaria-de-estado-de-saude-ses" target="_blank" rel="noopener noreferrer" data-search="dados abertos em saude https://www.dados.mg.gov.br/organization/secretaria-de-estado-de-saude-ses"><span class="material-icons">chevron_right</span><span>Dados Abertos em Saúde</span></a><a class="link-item" href="https://www.saude.mg.gov.br/obtermedicamentos/ceaf/estoque-ceaf/" target="_blank" rel="noopener noreferrer" data-search="estoque de medicamentos https://www.saude.mg.gov.br/obtermedicamentos/ceaf/estoque-ceaf/"><span class="material-icons">chevron_right</span><span>Estoque de Medicamentos</span></a><a class="link-item" href="https://www.saude.mg.gov.br/instrumentos-de-planejamento-e-gestao-do-sus/" target="_blank" rel="noopener noreferrer" data-search="instrumentos de planejamento e gestao https://www.saude.mg.gov.br/instrumentos-de-planejamento-e-gestao-do-sus/"><span class="material-icons">chevron_right</span><span>Instrumentos de Planejamento e Gestão</span></a><a class="link-item" href="https://info.saude.mg.gov.br/8/paineis/32" target="_blank" rel="noopener noreferrer" data-search="lista de espera em consultas e internacoes https://info.saude.mg.gov.br/8/paineis/32"><span class="material-icons">chevron_right</span><span>Lista de Espera em Consultas e Internações</span></a><a class="link-item" href="https://www.saude.mg.gov.br/obtermedicamentos/" target="_blank" rel="noopener noreferrer" data-search="lista de medicamentos https://www.saude.mg.gov.br/obtermedicamentos/"><span class="material-icons">chevron_right</span><span>Lista de Medicamentos</span></a><a class="link-item" href="https://app.powerbi.com/view?r=eyJrIjoiZGYyMGNmZWUtMWNjNy00YjdjLWEwZjgtZTg4M2VkOGI5MWM1IiwidCI6Ijg3ZTRkYTJiLTgyZGYtNDhmNi05MTU3LTY5YzNjYTYwMGRmMiIsImMiOjR9" target="_blank" rel="noopener noreferrer" data-search="painel do plano estadual de saude https://app.powerbi.com/view?r=eyjrijoizgyymgnmzwutmwnjny00yjdjlwewzjgtztg4m2vkogi5mwm1iiwidci6ijg3ztrkytjiltgyzgytndhmni05mtu3lty5yznjytywmgrmmiisimmiojr9"><span class="material-icons">chevron_right</span><span>Painel do Plano Estadual de Saúde</span></a><a class="link-item" href="https://www.saude.mg.gov.br/wp-content/uploads/2021/01/PES-24-27-04.2024-1-217.pdf" target="_blank" rel="noopener noreferrer" data-search="plano estadual de saude 2024-2027 https://www.saude.mg.gov.br/wp-content/uploads/2021/01/pes-24-27-04.2024-1-217.pdf"><span class="material-icons">chevron_right</span><span>Plano Estadual de Saúde 2024-2027</span></a><a class="link-item" href="https://www.fhemig.mg.gov.br/atendimento/horarios-de-atendimento-dos-hospitais-da-rede-fhemig" target="_blank" rel="noopener noreferrer" data-search="servicos hospitalares https://www.fhemig.mg.gov.br/atendimento/horarios-de-atendimento-dos-hospitais-da-rede-fhemig"><span class="material-icons">chevron_right</span><span>Serviços Hospitalares</span></a><a class="link-item" href="https://www.saude.mg.gov.br/vacinamaisminas/" target="_blank" rel="noopener noreferrer" data-search="vacinas https://www.saude.mg.gov.br/vacinamaisminas/"><span class="material-icons">chevron_right</span><span>Vacinas</span></a></div></article><article class="theme-block" data-search="dividas divida ativa gestao da divida publica https://www.fazenda.mg.gov.br/empresas/consulta-divida-ativa/relatorios https://www.fazenda.mg.gov.br/tesouro-estadual/divida-publica/portal-da-divida-publica-estadual"><div class="theme-header"><span class="material-icons theme-icon">money_off</span><h3>Dívidas</h3><span class="theme-count">2</span></div><div class="links-horizontal"><a class="link-item" href="https://www.fazenda.mg.gov.br/empresas/Consulta-Divida-Ativa/Relatorios" target="_blank" rel="noopener noreferrer" data-search="divida ativa https://www.fazenda.mg.gov.br/empresas/consulta-divida-ativa/relatorios"><span class="material-icons">chevron_right</span><span>Dívida Ativa</span></a><a class="link-item" href="https://www.fazenda.mg.gov.br/tesouro-estadual/divida-publica/portal-da-divida-publica-estadual" target="_blank" rel="noopener noreferrer" data-search="gestao da divida publica https://www.fazenda.mg.gov.br/tesouro-estadual/divida-publica/portal-da-divida-publica-estadual"><span class="material-icons">chevron_right</span><span>Gestão da Dívida Pública</span></a></div></article><article class="theme-block" data-search="economia economia https://dataviva.info/"><div class="theme-header"><span class="material-icons theme-icon">trending_up</span><h3>Economia</h3><span class="theme-count">1</span></div><div class="links-horizontal"><a class="link-item" href="https://dataviva.info/" target="_blank" rel="noopener noreferrer" data-search="economia https://dataviva.info/"><span class="material-icons">chevron_right</span><span>Economia</span></a></div></article><article class="theme-block" data-search="meio ambiente eia e rima licencas ambientais portal do meio ambiente https://feam.br/web/feam/elabora%c3%a7%c3%a3o-de-estudo-de-impacto/relat%c3%b3rio-de-impacto-ambiental-eia/rima- https://ecosistemas.meioambiente.mg.gov.br/sla/#/acesso-visitante https://transparencia.meioambiente.mg.gov.br/"><div class="theme-header"><span class="material-icons theme-icon">park</span><h3>Meio Ambiente</h3><span class="theme-count">3</span></div><div class="links-horizontal"><a class="link-item" href="https://feam.br/web/feam/elabora%C3%A7%C3%A3o-de-estudo-de-impacto/relat%C3%B3rio-de-impacto-ambiental-eia/rima-" target="_blank" rel="noopener noreferrer" data-search="eia e rima https://feam.br/web/feam/elabora%c3%a7%c3%a3o-de-estudo-de-impacto/relat%c3%b3rio-de-impacto-ambiental-eia/rima-"><span class="material-icons">chevron_right</span><span>EIA e RIMA</span></a><a class="link-item" href="https://ecosistemas.meioambiente.mg.gov.br/sla/#/acesso-visitante" target="_blank" rel="noopener noreferrer" data-search="licencas ambientais https://ecosistemas.meioambiente.mg.gov.br/sla/#/acesso-visitante"><span class="material-icons">chevron_right</span><span>Licenças Ambientais</span></a><a class="link-item" href="https://transparencia.meioambiente.mg.gov.br/" target="_blank" rel="noopener noreferrer" data-search="portal do meio ambiente https://transparencia.meioambiente.mg.gov.br/"><span class="material-icons">chevron_right</span><span>Portal do Meio Ambiente</span></a></div></article><article class="theme-block" data-search="empresas empresas sancionadas pela lei anticorrupcao registro publico de empresas https://www.transparencia.mg.gov.br/pagina/empresas-sancionadas-pela-lei-anticorrupcao-1 https://jucemg.mg.gov.br/estatisticas"><div class="theme-header"><span class="material-icons theme-icon">business</span><h3>Empresas</h3><span class="theme-count">2</span></div><div class="links-horizontal"><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/empresas-sancionadas-pela-lei-anticorrupcao-1" target="_blank" rel="noopener noreferrer" data-search="empresas sancionadas pela lei anticorrupcao https://www.transparencia.mg.gov.br/pagina/empresas-sancionadas-pela-lei-anticorrupcao-1"><span class="material-icons">chevron_right</span><span>Empresas Sancionadas pela Lei Anticorrupção</span></a><a class="link-item" href="https://jucemg.mg.gov.br/estatisticas" target="_blank" rel="noopener noreferrer" data-search="registro publico de empresas https://jucemg.mg.gov.br/estatisticas"><span class="material-icons">chevron_right</span><span>Registro Público de Empresas</span></a></div></article><article class="theme-block" data-search="obras publicas obras publicas https://www.transparencia.mg.gov.br/pagina/obras-publicas"><div class="theme-header"><span class="material-icons theme-icon">construction</span><h3>Obras Públicas</h3><span class="theme-count">1</span></div><div class="links-horizontal"><a class="link-item" href="https://www.transparencia.mg.gov.br/pagina/obras-publicas" target="_blank" rel="noopener noreferrer" data-search="obras publicas https://www.transparencia.mg.gov.br/pagina/obras-publicas"><span class="material-icons">chevron_right</span><span>Obras Públicas</span></a></div></article><article class="theme-block" data-search="patrimonio artistico e cultural patrimonio artistico e cultural https://www.dados.mg.gov.br/organization/instituto-estadual-do-patrimonio-historico-e-artistico-de-minas-gerais-iepha"><div class="theme-header"><span class="material-icons theme-icon">museum</span><h3>Patrimônio Artístico e Cultural</h3><span class="theme-count">1</span></div><div class="links-horizontal"><a class="link-item" href="https://www.dados.mg.gov.br/organization/instituto-estadual-do-patrimonio-historico-e-artistico-de-minas-gerais-iepha" target="_blank" rel="noopener noreferrer" data-search="patrimonio artistico e cultural https://www.dados.mg.gov.br/organization/instituto-estadual-do-patrimonio-historico-e-artistico-de-minas-gerais-iepha"><span class="material-icons">chevron_right</span><span>Patrimônio Artístico e Cultural</span></a></div></article><article class="theme-block" data-search="planejamento e resultados proposta orcamentaria https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/proposta-orcamentaria"><div class="theme-header"><span class="material-icons theme-icon">insert_chart</span><h3>Planejamento e Resultados</h3><span class="theme-count">1</span></div><div class="links-horizontal"><a class="link-item" href="https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/proposta-orcamentaria" target="_blank" rel="noopener noreferrer" data-search="proposta orcamentaria https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/proposta-orcamentaria"><span class="material-icons">chevron_right</span><span>Proposta Orçamentária</span></a></div></article></div>
+</section>
 
-                <!-- PESSOAL -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">people</span>
-                        <h3>Pessoal</h3>
-                        <span class="theme-count">6</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.transparencia.mg.gov.br/remuneracao" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Remuneração dos Servidores</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/despesa-com-pessoal" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Despesa com Pessoal</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/terceirizados" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Estagiários</a>
-                        <a href="https://www.transparencia.mg.gov.br/terceirizados" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Terceirizados</a>
-                        <a href="https://dados.mg.gov.br/dataset/relacao_nominal_servidores" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Relação Nominal dos Servidores</a>
-                        <a href="https://www.ceape.mg.gov.br/ceape/servers" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Cadastro CEAPE</a>
-                    </div>
-                </div>
+<div id="noResults" class="no-results">Nenhum resultado encontrado para a pesquisa.</div>
 
-                <!-- Concursos -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">assignment_ind</span>
-                        <h3>Concursos</h3>
-                        <span class="theme-count">3</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.transparencia.mg.gov.br/concursos-e-processos-seletivos/concursos-realizados" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Concursos realizados</a>
-                        <a href="https://www.mg.gov.br/planejamento/pagina/gestao-de-pessoas/recrutamento-e-selecao/concursos-publicos" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Editais concursos públicos</a>
-                        <a href="https://www.transparencia.mg.gov.br/menu/processos-seletivos-1" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Processos seletivos</a>
-                    </div>
-                </div>
+<section class="section footer-section" id="footerSection">
+  <div class="section-title">
+    <span class="material-icons">info</span>
+    <h2>Informações e Atendimento</h2>
+  </div>
 
-                <!-- Gestão Fiscal (LRF) -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">balance</span>
-                        <h3>Gestão Fiscal (LRF)</h3>
-                        <span class="theme-count">7</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.fazenda.mg.gov.br/governo/contadoria_geral/lei_responsabilidade_fiscal" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Relatório de Gestão Fiscal – RGF</a>
-                        <a href="https://www.fazenda.mg.gov.br/governo/contadoria_geral/lei_responsabilidade_fiscal" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Relatório Resumido da Execução Orçamentária – RREO</a>
-                        <a href="https://www.fazenda.mg.gov.br/governo/contadoria_geral/atendimentos_constitucionais/index_ldo_ano_atual.html" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Demonstrativos Quadrimestrais</a>
-                        <a href="https://www.fazenda.mg.gov.br/governo/contadoria_geral/atendimentos_constitucionais" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Índices Constitucionais</a>
-                        <a href="https://www.fazenda.mg.gov.br/tesouro-estadual/contadoria-geral/programa-de-reestruturacao-e-ajuste-fiscal/index.html" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Programas de Reestruturação e Ajuste</a>
-                        <a href="https://drive.google.com/drive/u/0/folders/1Pb_0-4u5ilYJa6Mi2tEwGKpnNlWstSDT" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Fundo de Erradicação da Miséria</a>
-                        <a href="https://drive.google.com/drive/u/0/folders/1lktezuJG8pNRGAS3KjoXnlzTWVSi_1Kb" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Programas Sociais</a>
-                    </div>
-                </div>
-
-                <!-- Viagens -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">flight</span>
-                        <h3>Viagens a Serviço</h3>
-                        <span class="theme-count">2</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.transparencia.mg.gov.br/menu/viagens-a-servico" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Diárias e Viagens</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/voos-do-governador" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Voos do Governador</a>
-                    </div>
-                </div>
-
-                <!-- Licitações e Contratos -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">gavel</span>
-                        <h3>Licitações e Contratos</h3>
-                        <span class="theme-count">6</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.transparencia.mg.gov.br/licitacoes-e-contratos/compras-e-contratos" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Compras e contratos</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/notas-fiscais" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Notas Fiscais</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/licitacoes" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Licitações</a>
-                        <a href="https://compras.mg.gov.br/agente-publico/planejamento-de-compras-subcomp/" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Plano anual de compras – PAC</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/fiscais-de-contrato" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Fiscais de contrato</a>
-                        <a href="https://compras.mg.gov.br/fornecedores/cadastro-de-fornecedores-impedidos-cafimp/" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> CAFIMP</a>
-                    </div>
-                </div>
-
-                <!-- Transferências Obrigatórias -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">swap_horiz</span>
-                        <h3>Transferências Obrigatórias</h3>
-                        <span class="theme-count">2</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.transparencia.mg.gov.br/menu/transferencias-obrigatorias-1" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Transferências de impostos a municípios</a>
-                        <a href="https://www.transparencia.mg.gov.br/menu/transferencias-obrigatorias-1" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Transferências recebidas do Governo Federal</a>
-                    </div>
-                </div>
-
-                <!-- Convênios e Parcerias -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">handshake</span>
-                        <h3>Convênios e Parcerias</h3>
-                        <span class="theme-count">7</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.transparencia.mg.gov.br/convenios/convenios-de-saida-de-recursos/convenios-de-saida" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Convênios / Parcerias de Saída de Recursos</a>
-                        <a href="https://app.powerbi.com/view?r=eyJrIjoiMzY1NjVkNzgtZDlhYy00ZWI0LThhM2UtMjY5MzliMzkzYWU2IiwidCI6ImU1ZDNhZTdjLTliMzgtNDhkZS1hMDg3LWY2NzM0YTI4NzU3NCJ9" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Convênios de Saída e Parceria MROSC</a>
-                        <a href="https://www.transparencia.mg.gov.br/convenios/convenios-de-entrada/convenio-entrada" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Convênios de Entrada de Recursos</a>
-                        <a href="https://www.casacivil.mg.gov.br/CaptacaoRecursos/Detalhe/44" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Convênios de Entrada – Portal Federal</a>
-                        <a href="https://dados.mg.gov.br/dataset/termos-parceria-contratos-gestao" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Termos de Parcerias</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/acordos-de-cooperacao-tecnica" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Acordos de Cooperação Técnica</a>
-                        <a href="http://www.ppp.mg.gov.br/projetos/contratos-assinados/contratos-assinados" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Parcerias Público Privadas</a>
-                    </div>
-                </div>
-
-                <!-- Emendas Parlamentares -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">how_to_vote</span>
-                        <h3>Emendas Parlamentares</h3>
-                        <span class="theme-count">2</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.emendas.mg.gov.br/transparencia/" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Painel de Emendas Estaduais</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/execucao-das-emendas-parlamentares" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Execução das Emendas Parlamentares Federais</a>
-                    </div>
-                </div>
-
-                <!-- Patrimônio -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">inventory</span>
-                        <h3>Patrimônio</h3>
-                        <span class="theme-count">2</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.transparencia.mg.gov.br/patrimonio/frota" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Frota</a>
-                        <a href="https://www.transparencia.mg.gov.br/patrimonio/bens-moveis" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Bens Móveis</a>
-                    </div>
-                </div>
-
-                <!-- Contas do Governador -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">account_balance</span>
-                        <h3>Contas do Governador</h3>
-                        <span class="theme-count">2</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.transparencia.mg.gov.br/pagina/relatorio-de-gestao-e-balanco-geral-do-estado" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Relatório de Gestão e Balanço Geral do Estado</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/julgamento-das-contas-do-governador-pelo-tce" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Julgamento das Contas pelo TCE</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- SEÇÃO 2: TRANSPARÊNCIA TEMÁTICA -->
-        <div class="section">
-            <div class="section-title">
-                <span class="material-icons">visibility</span>
-                <h2>Transparência Temática</h2>
-                <span>12 temas • 35 links</span>
-            </div>
-
-            <div class="themes-list">
-                <!-- Acordo Judicial -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">gavel</span>
-                        <h3>Acordo Judicial</h3>
-                        <span class="theme-count">2</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.transparencia.mg.gov.br/eventos-extraordinarios/acordo-judicial/acordo-judicial-reparacao-vale" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Acordo Judicial de Reparação da Vale</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/despesa-de-pessoal-acordo-judicial-da-vale" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Despesa de Pessoal – Acordo Vale</a>
-                    </div>
-                </div>
-
-                <!-- COVID-19 -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">coronavirus</span>
-                        <h3>COVID-19</h3>
-                        <span class="theme-count">1</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.transparencia.mg.gov.br/eventos-extraordinarios/covid-19/compras-contratos" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> COVID-19</a>
-                    </div>
-                </div>
-
-                <!-- Desenvolvimento Social -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">volunteer_activism</span>
-                        <h3>Desenvolvimento Social</h3>
-                        <span class="theme-count">2</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.dados.mg.gov.br/dataset/auxilios-financeiros" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Auxílios Financeiros</a>
-                        <a href="https://www.dados.mg.gov.br/dataset/programas-transferencia-renda" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Programas de Transferência de Renda</a>
-                    </div>
-                </div>
-
-                <!-- Dívidas -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">money_off</span>
-                        <h3>Dívidas</h3>
-                        <span class="theme-count">2</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.fazenda.mg.gov.br/empresas/Consulta-Divida-Ativa/Relatorios" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Dívida Ativa</a>
-                        <a href="https://www.fazenda.mg.gov.br/tesouro-estadual/divida-publica/portal-da-divida-publica-estadual" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Gestão da Dívida Pública</a>
-                    </div>
-                </div>
-
-                <!-- Economia -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">trending_up</span>
-                        <h3>Economia</h3>
-                        <span class="theme-count">1</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://dataviva.info/" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Economia</a>
-                    </div>
-                </div>
-
-                <!-- Educação -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">school</span>
-                        <h3>Educação</h3>
-                        <span class="theme-count">5</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.educacao.mg.gov.br/plano-estadual-de-educacao/" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Plano Estadual de Educação</a>
-                        <a href="https://lookerstudio.google.com/u/0/reporting/ec9c0100-72ec-4048-b94c-6fd37374aff1/page/p_u2uzahpktc" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Painel de Monitoramento do PEE</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/creches-escolares" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Creches Escolares</a>
-                        <a href="https://www.educacao.mg.gov.br/escolas/painel-escolas-de-minas/" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Lista de Escolas</a>
-                        <a href="https://controlequadropessoal.educacao.mg.gov.br/divulgacao" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Vagas para Contratação Temporária</a>
-                    </div>
-                </div>
-
-                <!-- Empresas -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">business</span>
-                        <h3>Empresas</h3>
-                        <span class="theme-count">2</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://jucemg.mg.gov.br/estatisticas" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Registro Público de Empresas</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/empresas-sancionadas-pela-lei-anticorrupcao-1" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Empresas Sancionadas pela Lei Anticorrupção</a>
-                    </div>
-                </div>
-
-                <!-- Meio Ambiente -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">park</span>
-                        <h3>Meio Ambiente</h3>
-                        <span class="theme-count">3</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://transparencia.meioambiente.mg.gov.br/" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Portal do Meio Ambiente</a>
-                        <a href="https://feam.br/web/feam/elabora%C3%A7%C3%A3o-de-estudo-de-impacto/relat%C3%B3rio-de-impacto-ambiental-eia/rima-" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> EIA e RIMA</a>
-                        <a href="https://ecosistemas.meioambiente.mg.gov.br/sla/#/acesso-visitante" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Licenças Ambientais</a>
-                    </div>
-                </div>
-
-                <!-- Obras -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">construction</span>
-                        <h3>Obras</h3>
-                        <span class="theme-count">3</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://app.powerbi.com/view?r=eyJrIjoiMzkwZGM3MGItZGUyNS00NGMzLThkY2YtNTNhYzk0OGYwMzM5IiwidCI6IjUyZTU3MzMxLWYyNzgtNGNhMC05NmZkLTk0YzVhYjFmODUyNCJ9&disablecdnExpiration=1747778049" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Painel de Contratos de Obras</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/obras-publicas" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Painel de Obras Públicas</a>
-                        <a href="https://www1.compras.mg.gov.br/obra/consulta/consultaObra.html?_gl=1*10rhe7s*_ga*MTc5MDMwMjQ3Ni4xNzQwNDAwNjM0*_ga_K12Q555D01*MTc0MDU4ODcwNi41LjEuMTc0MDU5MTQ2MC4wLjAuMA.." class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Processos de Compras – Obras</a>
-                    </div>
-                </div>
-
-                <!-- Patrimônio Cultural -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">museum</span>
-                        <h3>Patrimônio Cultural</h3>
-                        <span class="theme-count">1</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.dados.mg.gov.br/organization/instituto-estadual-do-patrimonio-historico-e-artistico-de-minas-gerais-iepha" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Patrimônio Artístico e Cultural</a>
-                    </div>
-                </div>
-
-                <!-- Saúde -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">local_hospital</span>
-                        <h3>Saúde</h3>
-                        <span class="theme-count">9</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.saude.mg.gov.br/wp-content/uploads/2021/01/PES-24-27-04.2024-1-217.pdf" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Plano Estadual de Saúde 2024-2027</a>
-                        <a href="https://app.powerbi.com/view?r=eyJrIjoiZGYyMGNmZWUtMWNjNy00YjdjLWEwZjgtZTg4M2VkOGI5MWM1IiwidCI6Ijg3ZTRkYTJiLTgyZGYtNDhmNi05MTU3LTY5YzNjYTYwMGRmMiIsImMiOjR9" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Painel do Plano Estadual de Saúde</a>
-                        <a href="https://www.saude.mg.gov.br/instrumentos-de-planejamento-e-gestao-do-sus/" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Instrumentos de Planejamento e Gestão</a>
-                        <a href="https://www.saude.mg.gov.br/vacinamaisminas/" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Vacinas</a>
-                        <a href="https://www.saude.mg.gov.br/obtermedicamentos/" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Lista de Medicamentos</a>
-                        <a href="https://www.saude.mg.gov.br/obtermedicamentos/ceaf/estoque-ceaf/" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Estoque de Medicamentos</a>
-                        <a href="https://info.saude.mg.gov.br/8/paineis/32" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Lista de Espera em Consultas e Internações</a>
-                        <a href="https://www.fhemig.mg.gov.br/atendimento/horarios-de-atendimento-dos-hospitais-da-rede-fhemig" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Serviços Hospitalares</a>
-                        <a href="https://www.dados.mg.gov.br/group/saude" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Dados Abertos em Saúde</a>
-                    </div>
-                </div>
-
-                <!-- Segurança -->
-                <div class="theme-block">
-                    <div class="theme-header">
-                        <span class="material-icons">security</span>
-                        <h3>Segurança</h3>
-                        <span class="theme-count">2</span>
-                    </div>
-                    <div class="links-horizontal">
-                        <a href="https://www.dados.mg.gov.br/dataset/crimes-violentos" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Crimes Violentos</a>
-                        <a href="https://www.dados.mg.gov.br/dataset/violencia-contra-mulher" class="link-item" target="_blank" rel="noopener noreferrer"><span class="material-icons">chevron_right</span> Violência contra mulher</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Conector visual -->
-        <div class="connector">
-            <div class="connector-dot"></div>
-            <div class="connector-dot"></div>
-            <div class="connector-dot"></div>
-            <div class="connector-dot"></div>
-            <div class="connector-dot"></div>
-        </div>
-
-        <!-- SEÇÃO SOBRE E ATENDIMENTO -->
-        <div class="footer-section">
-            <div class="footer-grid">
-                <!-- Sobre o Portal -->
-                <div class="footer-block">
-                    <div class="footer-header">
-                        <span class="material-icons">info</span>
-                        <h3>Sobre o Portal</h3>
-                    </div>
-                    <div class="footer-links">
-                        <a href="https://www.transparencia.mg.gov.br/pagina/o-que-e-o-portal-1" class="footer-link" target="_blank" rel="noopener noreferrer"><span class="material-icons">article</span> O que é o Portal</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/historico-de-atualizacao" class="footer-link" target="_blank" rel="noopener noreferrer"><span class="material-icons">history</span> Histórico de Atualizações</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/legislacao" class="footer-link" target="_blank" rel="noopener noreferrer"><span class="material-icons">gavel</span> Legislação</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/glossario-1" class="footer-link" target="_blank" rel="noopener noreferrer"><span class="material-icons">menu_book</span> Glossário</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/estrutura-do-governo-1" class="footer-link" target="_blank" rel="noopener noreferrer"><span class="material-icons">account_balance</span> Estrutura do Governo</a>
-                    </div>
-                </div>
-
-                <!-- Canais de Atendimento -->
-                <div class="footer-block">
-                    <div class="footer-header">
-                        <span class="material-icons">headset_mic</span>
-                        <h3>Canais de Atendimento</h3>
-                    </div>
-                    <div class="footer-links">
-                        <a href="https://acessoainformacao.mg.gov.br/sistema/site/index.aspx" class="footer-link" target="_blank" rel="noopener noreferrer"><span class="material-icons">lock_open</span> Acesso à Informação (e-SIC)</a>
-                        <a href="https://faleconosco.mg.gov.br/ligminas-bpms-frontend/publico/br/gov/prodemge/seplag/ligminasbpms/visao/processos/RegistrarAtendimentoFaleConosco.zul?processo=PROC_00093&atividade=ATIV_00388&site=SEE" class="footer-link" target="_blank" rel="noopener noreferrer"><span class="material-icons">school</span> Fale Conosco – SEE</a>
-                        <a href="https://detran.mg.gov.br/atendimento" class="footer-link" target="_blank" rel="noopener noreferrer"><span class="material-icons">directions_car</span> Fale Conosco – DETRAN</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/fale-conosco-portal-da-transparencia" class="footer-link" target="_blank" rel="noopener noreferrer"><span class="material-icons">forum</span> Fale Conosco – Portal</a>
-                        <a href="https://www.mg.gov.br/pagina/ligminas-155" class="footer-link" target="_blank" rel="noopener noreferrer"><span class="material-icons">phone</span> Lig Minas – 155</a>
-                        <a href="https://www.ouvidoriageral.mg.gov.br/" class="footer-link" target="_blank" rel="noopener noreferrer"><span class="material-icons">record_voice_over</span> Ouvidoria Geral</a>
-                        <a href="https://www.transparencia.mg.gov.br/pagina/perguntas-frequentes" class="footer-link" target="_blank" rel="noopener noreferrer"><span class="material-icons">help</span> Perguntas Frequentes</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="footer-grid">
+    <div class="footer-block searchable-footer-block" data-search="sobre portal">
+      <div class="footer-header">
+        <span class="material-icons">info</span>
+        <h3>Sobre o Portal</h3>
+      </div>
+      <div class="footer-links" id="sobreLinks"><a class="footer-link searchable-item" href="https://www.transparencia.mg.gov.br/pagina/o-que-e-o-portal-1" target="_blank" rel="noopener noreferrer" data-search="sobre o que e o portal https://www.transparencia.mg.gov.br/pagina/o-que-e-o-portal-1"><span class="material-icons">chevron_right</span><span>O que é o Portal</span></a><a class="footer-link searchable-item" href="https://www.transparencia.mg.gov.br/pagina/historico-de-atualizacao" target="_blank" rel="noopener noreferrer" data-search="sobre historico de atualizacoes https://www.transparencia.mg.gov.br/pagina/historico-de-atualizacao"><span class="material-icons">chevron_right</span><span>Histórico de Atualizações</span></a><a class="footer-link searchable-item" href="https://www.transparencia.mg.gov.br/pagina/legislacao" target="_blank" rel="noopener noreferrer" data-search="sobre legislacao https://www.transparencia.mg.gov.br/pagina/legislacao"><span class="material-icons">chevron_right</span><span>Legislação</span></a><a class="footer-link searchable-item" href="https://www.transparencia.mg.gov.br/pagina/glossario-1" target="_blank" rel="noopener noreferrer" data-search="sobre glossario https://www.transparencia.mg.gov.br/pagina/glossario-1"><span class="material-icons">chevron_right</span><span>Glossário</span></a><a class="footer-link searchable-item" href="https://www.transparencia.mg.gov.br/pagina/estrutura-do-governo-1" target="_blank" rel="noopener noreferrer" data-search="sobre estrutura do governo https://www.transparencia.mg.gov.br/pagina/estrutura-do-governo-1"><span class="material-icons">chevron_right</span><span>Estrutura do Governo</span></a></div>
     </div>
 
-    <script>
-        // Atualizar a data
-        const dataAtual = new Date().toLocaleDateString('pt-BR', { 
-            day: 'numeric', 
-            month: 'long', 
-            year: 'numeric' 
+    <div class="footer-block searchable-footer-block" data-search="canais atendimento">
+      <div class="footer-header">
+        <span class="material-icons">support_agent</span>
+        <h3>Canais de Atendimento</h3>
+      </div>
+      <div class="footer-links" id="atendimentoLinks"><a class="footer-link searchable-item" href="https://acessoainformacao.mg.gov.br/sistema/site/index.aspx" target="_blank" rel="noopener noreferrer" data-search="atendimento acesso a informacao (e-sic) https://acessoainformacao.mg.gov.br/sistema/site/index.aspx"><span class="material-icons">chevron_right</span><span>Acesso à Informação (e-SIC)</span></a><a class="footer-link searchable-item" href="https://faleconosco.mg.gov.br/ligminas-bpms-frontend/publico/br/gov/prodemge/seplag/ligminasbpms/visao/processos/RegistrarAtendimentoFaleConosco.zul?processo=PROC_00093&amp;atividade=ATIV_00388&amp;site=SEE" target="_blank" rel="noopener noreferrer" data-search="atendimento fale conosco – see https://faleconosco.mg.gov.br/ligminas-bpms-frontend/publico/br/gov/prodemge/seplag/ligminasbpms/visao/processos/registraratendimentofaleconosco.zul?processo=proc_00093&amp;atividade=ativ_00388&amp;site=see"><span class="material-icons">chevron_right</span><span>Fale Conosco – SEE</span></a><a class="footer-link searchable-item" href="https://detran.mg.gov.br/atendimento" target="_blank" rel="noopener noreferrer" data-search="atendimento fale conosco – detran mg https://detran.mg.gov.br/atendimento"><span class="material-icons">chevron_right</span><span>Fale Conosco – DETRAN MG</span></a><a class="footer-link searchable-item" href="https://www.transparencia.mg.gov.br/pagina/fale-conosco-portal-da-transparencia" target="_blank" rel="noopener noreferrer" data-search="atendimento fale conosco – portal da transparencia https://www.transparencia.mg.gov.br/pagina/fale-conosco-portal-da-transparencia"><span class="material-icons">chevron_right</span><span>Fale Conosco – Portal da Transparência</span></a><a class="footer-link searchable-item" href="https://www.mg.gov.br/pagina/ligminas-155" target="_blank" rel="noopener noreferrer" data-search="atendimento lig minas – 155 https://www.mg.gov.br/pagina/ligminas-155"><span class="material-icons">chevron_right</span><span>Lig Minas – 155</span></a><a class="footer-link searchable-item" href="https://www.ouvidoriageral.mg.gov.br/" target="_blank" rel="noopener noreferrer" data-search="atendimento ouvidoria geral do estado https://www.ouvidoriageral.mg.gov.br/"><span class="material-icons">chevron_right</span><span>Ouvidoria Geral do Estado</span></a><a class="footer-link searchable-item" href="https://www.transparencia.mg.gov.br/pagina/perguntas-frequentes" target="_blank" rel="noopener noreferrer" data-search="atendimento perguntas frequentes https://www.transparencia.mg.gov.br/pagina/perguntas-frequentes"><span class="material-icons">chevron_right</span><span>Perguntas Frequentes</span></a></div>
+    </div>
+  </div>
+</section>
+</div>
+
+<script>
+(function () {
+  const input = document.getElementById('siteSearch');
+  const noResults = document.getElementById('noResults');
+
+  function normalize(text) {
+    return String(text || '')
+      .toLocaleLowerCase('pt-BR')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
+  }
+
+
+  const CONSULTAS_ORDER = [
+    'Planejamento e Resultados',
+    'Receitas Públicas',
+    'Despesas Públicas',
+    'Pessoal',
+    'Concursos e Processos Seletivos',
+    'Gestão Fiscal e Governamental',
+    'Contas Anuais do Governador',
+    'Viagens a Serviço',
+    'Licitações e Contratos',
+    'Transferências Obrigatórias',
+    'Convênios e Parcerias',
+    'Emendas Parlamentares',
+    'Patrimônio'
+  ];
+
+  function sortConsultasCards() {
+    const container = document.getElementById('consultas');
+    if (!container) return;
+
+    const cards = Array.from(container.children);
+    const position = new Map(
+      CONSULTAS_ORDER.map((name, index) => [normalize(name), index])
+    );
+
+    cards.sort((a, b) => {
+      const aName = normalize(a.querySelector('h3')?.textContent || '');
+      const bName = normalize(b.querySelector('h3')?.textContent || '');
+      const ai = position.has(aName) ? position.get(aName) : 9999;
+      const bi = position.has(bName) ? position.get(bName) : 9999;
+      return ai - bi || aName.localeCompare(bName, 'pt-BR');
+    });
+
+    cards.forEach(card => container.appendChild(card));
+  }
+
+  function updateCounts() {
+    const consultaCards = document.querySelectorAll('#consultas .theme-block');
+    const tematicaCards = document.querySelectorAll('#tematica .theme-block');
+
+    const linkCount = (containerId) =>
+      document.querySelectorAll('#' + containerId + ' .link-item').length;
+
+    const consultasCount = document.getElementById('consultasCount');
+    const tematicaCount = document.getElementById('tematicaCount');
+
+    if (consultasCount) {
+      consultasCount.textContent =
+        consultaCards.length + ' temas • ' + linkCount('consultas') + ' links';
+    }
+
+    if (tematicaCount) {
+      tematicaCount.textContent =
+        tematicaCards.length + ' temas • ' + linkCount('tematica') + ' links';
+    }
+  }
+
+  function runSearch() {
+    const query = normalize(input.value.trim());
+    let matches = 0;
+
+    let consultasVisible = 0;
+    document.querySelectorAll('#consultasSection .theme-block').forEach(function (card) {
+      const text = normalize(card.getAttribute('data-search') || card.textContent);
+      const show = !query || text.indexOf(query) !== -1;
+      card.classList.toggle('search-hidden', !show);
+      if (show) consultasVisible++;
+    });
+    document.getElementById('consultasSection').style.display =
+      consultasVisible ? '' : 'none';
+    matches += consultasVisible;
+
+    let tematicaVisible = 0;
+    document.querySelectorAll('#tematicaSection .theme-block').forEach(function (card) {
+      const text = normalize(card.getAttribute('data-search') || card.textContent);
+      const show = !query || text.indexOf(query) !== -1;
+      card.classList.toggle('search-hidden', !show);
+      if (show) tematicaVisible++;
+    });
+    document.getElementById('tematicaSection').style.display =
+      tematicaVisible ? '' : 'none';
+    matches += tematicaVisible;
+
+    document.querySelectorAll('.searchable-footer-block').forEach(function (block) {
+      const blockSearch = normalize(block.getAttribute('data-search') || '');
+      const headingMatch = !query || blockSearch.indexOf(query) !== -1;
+
+      if (headingMatch) {
+        block.classList.remove('search-hidden');
+        block.querySelectorAll('.searchable-item').forEach(function (item) {
+          item.classList.remove('search-hidden');
         });
-        document.querySelector('.update-badge span:last-child').textContent = `Atualizado em ${dataAtual}`;
-    </script>
+        matches++;
+        return;
+      }
+
+      let visibleItems = 0;
+      block.querySelectorAll('.searchable-item').forEach(function (item) {
+        const itemSearch = normalize(item.getAttribute('data-search') || item.textContent);
+        const show = itemSearch.indexOf(query) !== -1;
+        item.classList.toggle('search-hidden', !show);
+        if (show) visibleItems++;
+      });
+
+      block.classList.toggle('search-hidden', !visibleItems);
+      if (visibleItems) matches++;
+    });
+
+    document.getElementById('footerSection').style.display =
+      document.querySelectorAll('.searchable-footer-block:not(.search-hidden)').length
+        ? '' : 'none';
+
+    noResults.style.display = query && !matches ? 'block' : 'none';
+  }
+
+  sortConsultasCards();
+  updateCounts();
+  runSearch();
+
+  input.addEventListener('input', runSearch);
+  input.addEventListener('keyup', runSearch);
+  input.addEventListener('search', runSearch);
+})();
+</script>
 </body>
 </html>
