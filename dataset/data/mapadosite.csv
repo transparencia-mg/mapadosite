@@ -9,7 +9,7 @@ Consulta;Convênios e Parcerias;Convênios / Parcerias de Saída de Recursos;htt
 Consulta;Convênios e Parcerias;Convênios de Entrada de Recursos;Atualização de links
 Consulta;Convênios e Parcerias;Acordos de Cooperação Técnica;https://www.transparencia.mg.gov.br/pagina/acordos-de-cooperacao-tecnica
 Consulta;Proposta e Alterações Orçamentárias;Alteração Orçamentária;https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/alteracao-orcamentaria
-Transparência Temática;Desenvolvimento Social;Auxílios Financeiros;https://www.dados.mg.gov.br/dataset/auxilios-financeiros
+Transparência Temática;Acordos Judiciais de Reparação;Despesa de Pessoal – Acordo Vale;https://www.transparencia.mg.gov.br/pagina/despesa-de-pessoal-acordo-judicial-da-vale
 Consulta;Receitas Públicas;Beneficiários das Desonerações Tributárias;https://www.transparencia.mg.gov.br/pagina/beneficiarios-das-desoneracoes-tributarias
 Consulta;Patrimônio;Bens Móveis;https://www.transparencia.mg.gov.br/patrimonio/bens-moveis
 Consulta;Pessoal;Remuneração dos Servidores;https://www.transparencia.mg.gov.br/remuneracao
@@ -21,61 +21,61 @@ Consulta;Pessoal;Cadastro de Servidores Excluídos - CEAPE;https://www.ceape.mg.
 Consulta;Licitações e Contratos;Compras e Contratos;https://www.transparencia.mg.gov.br/licitacoes-e-contratos/compras-e-contratos
 Consulta;Concursos e Processos Seletivos;Concursos Realizados;https://www.transparencia.mg.gov.br/concursos-e-processos-seletivos/concursos-realizados
 Consulta;Licitações e Contratos;Contratos;https://www.transparencia.mg.gov.br/pagina/contratos
+Transparência Temática;Acordos Judiciais de Reparação;Execução do Acordo Judicial de Reparação da Vale;https://www.transparencia.mg.gov.br/eventos-extraordinarios/acordo-judicial/acordo-judicial-reparacao-vale
 Transparência Temática;COVID;COVID-19;https://www.transparencia.mg.gov.br/eventos-extraordinarios/covid-19/compras-contratos
-Transparência Temática;Educação;Creches Escolares;https://www.transparencia.mg.gov.br/pagina/creches-escolares
 Consulta;Proposta e Alterações Orçamentárias;Crédito Orçamentário;https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/credito-orcamentario
-Transparência Temática;Segurança;Crimes Violentos;https://www.dados.mg.gov.br/dataset/crimes-violentos
-Transparência Temática;Saúde;Dados Abertos em Saúde;https://www.dados.mg.gov.br/organization/secretaria-de-estado-de-saude-ses
-Transparência Temática;Acordos Judiciais de Reparação;Despesa de Pessoal – Acordo Vale;https://www.transparencia.mg.gov.br/pagina/despesa-de-pessoal-acordo-judicial-da-vale
+Transparência Temática;Desenvolvimento Social;Auxílios Financeiros;https://www.dados.mg.gov.br/dataset/auxilios-financeiros
+Transparência Temática;Desenvolvimento Social;Programas de Transferência de Renda;https://www.dados.mg.gov.br/dataset/programas-transferencia-renda
+Transparência Temática;Dívidas;Dívida Ativa;https://www.fazenda.mg.gov.br/empresas/Consulta-Divida-Ativa/Relatorios
 Consulta;Despesas Públicas;Despesas;https://transparencia.mg.gov.br/despesa-estado/despesa
 Consulta;Despesas Públicas;Despesa por  empenho;https://www.transparencia.mg.gov.br/pagina/despesa-por-empenho
 Consulta;Viagens a Serviço;Diárias e Viagens;https://www.transparencia.mg.gov.br/diarias-e-viagens/viagens
-Transparência Temática;Dívidas;Dívida Ativa;https://www.fazenda.mg.gov.br/empresas/Consulta-Divida-Ativa/Relatorios
+Transparência Temática;Dívidas;Gestão da Dívida Pública;https://www.fazenda.mg.gov.br/tesouro-estadual/divida-publica/portal-da-divida-publica-estadual
 Transparência Temática;Economia;Economia;https://dataviva.info/
 Consulta;Concursos e Processos Seletivos;Editais concursos públicos;https://www.mg.gov.br/planejamento/pagina/gestao-de-pessoas/recrutamento-e-selecao/concursos-publicos
-Transparência Temática;Meio Ambiente;EIA e RIMA;https://feam.br/web/feam/elabora%C3%A7%C3%A3o-de-estudo-de-impacto/relat%C3%B3rio-de-impacto-ambiental-eia/rima-
+Transparência Temática;Educação;Creches Escolares;https://www.transparencia.mg.gov.br/pagina/creches-escolares
 Consulta;Proposta e Alterações Orçamentárias;Emendas ao Projeto da LOA;https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/emenda-orcamentaria
-Transparência Temática;Empresas;Empresas Sancionadas pela Lei Anticorrupção;https://www.transparencia.mg.gov.br/pagina/empresas-sancionadas-pela-lei-anticorrupcao-1
-Transparência Temática;Saúde;Estoque de Medicamentos;https://www.saude.mg.gov.br/obtermedicamentos/ceaf/estoque-ceaf/
+Transparência Temática;Educação;FUNDEB;https://fundeb.educacao.mg.gov.br/index.php/documentos/atas
+Transparência Temática;Educação;Lista de Escolas;https://www.educacao.mg.gov.br/escolas/painel-escolas-de-minas/
 Consulta;Emendas Parlamentares;Execução das Emendas Parlamentares Federais;https://www.transparencia.mg.gov.br/pagina/execucao-das-emendas-parlamentares
-Transparência Temática;Acordos Judiciais de Reparação;Execução do Acordo Judicial de Reparação da Vale;https://www.transparencia.mg.gov.br/eventos-extraordinarios/acordo-judicial/acordo-judicial-reparacao-vale
+Transparência Temática;Educação;Plano Estadual de Educação;https://www.educacao.mg.gov.br/plano-estadual-de-educacao/
 Consulta;Licitações e Contratos;Licitações;https://www.transparencia.mg.gov.br/pagina/licitacoes
 Consulta;Licitações e Contratos;Fiscais de contrato;https://www.transparencia.mg.gov.br/pagina/fiscais-de-contrato
 Consulta;Patrimônio;Frota;https://www.transparencia.mg.gov.br/patrimonio/frota
-Transparência Temática;Educação;FUNDEB;https://fundeb.educacao.mg.gov.br/index.php/documentos/atas
-Transparência Temática;Dívidas;Gestão da Dívida Pública;https://www.fazenda.mg.gov.br/tesouro-estadual/divida-publica/portal-da-divida-publica-estadual
+Transparência Temática;Educação;Vagas para Contratação Temporária;https://controlequadropessoal.educacao.mg.gov.br/divulgacao
+Transparência Temática;Empresas;Empresas Sancionadas pela Lei Anticorrupção;https://www.transparencia.mg.gov.br/pagina/empresas-sancionadas-pela-lei-anticorrupcao-1
 Consulta;Incentivos;Crédito e Financiamento do Setor Público;https://www.bdmg.mg.gov.br/transparencia-documentos/
 Consulta;Incentivos;Incentivos Culturais;https://www.secult.mg.gov.br/documentos/lei-estadual-de-incentivo-a-cultura-leic
 Consulta;Incentivos;Incentivos Esportivos;http://incentivo.esportes.mg.gov.br/projetos-aprovados/
-Transparência Temática;Saúde;Instrumentos de Planejamento e Gestão;https://www.saude.mg.gov.br/instrumentos-de-planejamento-e-gestao-do-sus/
+Transparência Temática;Empresas;Registro Público de Empresas;https://jucemg.mg.gov.br/estatisticas
 Consulta;Contas Anuais do Governador;Julgamento das Contas pelo TCE;https://www.transparencia.mg.gov.br/pagina/julgamento-das-contas-do-governador-pelo-tce
 Consulta;Pessoal;Legislação das Carreiras;https://www.mg.gov.br/planejamento/pagina/gestao-de-pessoas/legislacao/legislacao-de-carreira
 Consulta;Planejamento e Resultados;Leis Orçamentárias;https://www.transparencia.mg.gov.br/pagina/leis-orcamentarias
+Transparência Temática;Meio Ambiente;EIA e RIMA;https://feam.br/web/feam/elabora%C3%A7%C3%A3o-de-estudo-de-impacto/relat%C3%B3rio-de-impacto-ambiental-eia/rima-
 Transparência Temática;Meio Ambiente;Licenças Ambientais;https://ecosistemas.meioambiente.mg.gov.br/sla/#/acesso-visitante
-Transparência Temática;Educação;Lista de Escolas;https://www.educacao.mg.gov.br/escolas/painel-escolas-de-minas/
-Transparência Temática;Saúde;Lista de Espera em Consultas e Internações;https://info.saude.mg.gov.br/8/paineis/32
-Transparência Temática;Saúde;Lista de Medicamentos;https://www.saude.mg.gov.br/obtermedicamentos/
+Transparência Temática;Meio Ambiente;Portal do Meio Ambiente;https://transparencia.meioambiente.mg.gov.br/
+Transparência Temática;Obras Públicas;Obras Públicas;https://www.transparencia.mg.gov.br/pagina/obras-publicas
 Consulta;Despesas Públicas;Restos a Pagar;https://www.transparencia.mg.gov.br/despesa-estado/restos-a-pagar
 Consulta;Licitações e Contratos;Notas Fiscais;https://www.transparencia.mg.gov.br/pagina/notas-fiscais
 Consulta;Proposta e Alterações Orçamentárias;Obras Orçadas;https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/obras-orcadas
-Transparência Temática;Obras Públicas;Obras Públicas;https://www.transparencia.mg.gov.br/pagina/obras-publicas
+Transparência Temática;Patrimônio Artístico e Cultural;Patrimônio Artístico e Cultural;https://www.dados.mg.gov.br/organization/instituto-estadual-do-patrimonio-historico-e-artistico-de-minas-gerais-iepha
 Consulta;Despesas Públicas;Ordem Cronológica;https://www.transparencia.mg.gov.br/pagina/ordem-cronologica
 Consulta;Emendas Parlamentares;Painel de Emendas Estaduais;https://www.emendas.mg.gov.br/transparencia/
-Transparência Temática;Saúde;Painel do Plano Estadual de Saúde;https://app.powerbi.com/view?r=eyJrIjoiZGYyMGNmZWUtMWNjNy00YjdjLWEwZjgtZTg4M2VkOGI5MWM1IiwidCI6Ijg3ZTRkYTJiLTgyZGYtNDhmNi05MTU3LTY5YzNjYTYwMGRmMiIsImMiOjR9
+Transparência Temática;Saúde;Dados Abertos em Saúde;https://www.dados.mg.gov.br/organization/secretaria-de-estado-de-saude-ses
 Consulta;Convênios e Parcerias;Parcerias Público Privadas;http://www.ppp.mg.gov.br/projetos/contratos-assinados/contratos-assinados
-Transparência Temática;Patrimônio Artístico e Cultural;Patrimônio Artístico e Cultural;https://www.dados.mg.gov.br/organization/instituto-estadual-do-patrimonio-historico-e-artistico-de-minas-gerais-iepha
+Transparência Temática;Saúde;Estoque de Medicamentos;https://www.saude.mg.gov.br/obtermedicamentos/ceaf/estoque-ceaf/
 Consulta;Licitações e Contratos;Plano anual de compras – PAC;https://compras.mg.gov.br/agente-publico/planejamento-de-compras-subcomp/
 Consulta;Licitações e Contratos;CAFIMP;https://compras.mg.gov.br/fornecedores/cadastro-de-fornecedores-impedidos-cafimp/
-Transparência Temática;Educação;Plano Estadual de Educação;https://www.educacao.mg.gov.br/plano-estadual-de-educacao/
-Transparência Temática;Saúde;Plano Estadual de Saúde 2024-2027;https://www.saude.mg.gov.br/wp-content/uploads/2021/01/PES-24-27-04.2024-1-217.pdf
-Transparência Temática;Meio Ambiente;Portal do Meio Ambiente;https://transparencia.meioambiente.mg.gov.br/
+Transparência Temática;Saúde;Instrumentos de Planejamento e Gestão;https://www.saude.mg.gov.br/instrumentos-de-planejamento-e-gestao-do-sus/
+Transparência Temática;Saúde;Lista de Espera em Consultas e Internações;https://info.saude.mg.gov.br/8/paineis/32
+Transparência Temática;Saúde;Lista de Medicamentos;https://www.saude.mg.gov.br/obtermedicamentos/
 Consulta;Concursos e Processos Seletivos;Processos Seletivos SEJUSP;https://www.transparencia.mg.gov.br/menu/processos-seletivos-1
 Consulta;Planejamento e Monitoramento do PPAG;Programação e Execução – Consolidado;https://www.transparencia.mg.gov.br/planejamento-e-resultados/planejamento-e-monitoramento-ppag/programacao-execucao-consolidado
 Consulta;Planejamento e Monitoramento do PPAG;Programação e Execução do PPAG por Programa;https://www.transparencia.mg.gov.br/planejamento-e-resultados/planejamento-e-monitoramento-ppag/programacao-execucao-ppag-programa/ppagprograma-programas/6/2025/0/0
-Transparência Temática;Desenvolvimento Social;Programas de Transferência de Renda;https://www.dados.mg.gov.br/dataset/programas-transferencia-renda
+Transparência Temática;Saúde;Painel do Plano Estadual de Saúde;https://app.powerbi.com/view?r=eyJrIjoiZGYyMGNmZWUtMWNjNy00YjdjLWEwZjgtZTg4M2VkOGI5MWM1IiwidCI6Ijg3ZTRkYTJiLTgyZGYtNDhmNi05MTU3LTY5YzNjYTYwMGRmMiIsImMiOjR9
 Consulta;Proposta e Alterações Orçamentárias;Proposta Orçamentária;https://www.transparencia.mg.gov.br/planejamento-e-resultados/proposta-alteracoes-orcamentaria/proposta-orcamentaria
 Consulta;Receitas Públicas;Receitas;https://www.transparencia.mg.gov.br/receitas/estado-receita
-Transparência Temática;Empresas;Registro Público de Empresas;https://jucemg.mg.gov.br/estatisticas
+Transparência Temática;Saúde;Plano Estadual de Saúde 2024-2027;https://www.saude.mg.gov.br/wp-content/uploads/2021/01/PES-24-27-04.2024-1-217.pdf
 Consulta;Contas Anuais do Governador;Relatório de Gestão e Balanço Geral do Estado;https://www.transparencia.mg.gov.br/pagina/relatorio-de-gestao-e-balanco-geral-do-estado
 Consulta;Relatórios da Lei de Responsabilidade Fiscal;Fundo de Erradicação da Miséria;https://drive.google.com/drive/u/0/folders/1Pb_0-4u5ilYJa6Mi2tEwGKpnNlWstSDT
 Consulta;Relatórios da Lei de Responsabilidade Fiscal;Programas de Reestruturação e Ajuste Fiscal;https://www.fazenda.mg.gov.br/tesouro-estadual/contadoria-geral/programa-de-reestruturacao-e-ajuste-fiscal/index.html
@@ -92,7 +92,7 @@ Consulta;Convênios e Parcerias;Termos de Parcerias e Contratos de Gestão;https
 Consulta;Transferências Obrigatórias;Transferências de impostos a municípios;https://www.transparencia.mg.gov.br/menu/transferencias-obrigatorias-1
 Consulta;Transferências Obrigatórias;Transferências recebidas do Governo Federal;https://www.transparencia.mg.gov.br/menu/transferencias-obrigatorias-1
 Transparência Temática;Saúde;Vacinas;https://www.saude.mg.gov.br/vacinamaisminas/
-Transparência Temática;Educação;Vagas para Contratação Temporária;https://controlequadropessoal.educacao.mg.gov.br/divulgacao
+Transparência Temática;Segurança;Crimes Violentos;https://www.dados.mg.gov.br/dataset/crimes-violentos
 Transparência Temática;Segurança;Violência Contra Mulher;https://www.dados.mg.gov.br/dataset/violencia-contra-mulher
 Consulta;Viagens a Serviço;Voos do Governador;https://www.transparencia.mg.gov.br/pagina/voos-do-governador
 Informações e Atendimento;Atendimento;Acesso à Informação (e-SIC);https://acessoainformacao.mg.gov.br/sistema/site/index.aspx
